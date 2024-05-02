@@ -8,7 +8,7 @@ public class OnlinePaymentSystemApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(OnlinePaymentSystemApplication.class, args);
-        jk
+        jk,
     }
 
 }
