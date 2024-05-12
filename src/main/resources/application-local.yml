@@ -10,12 +10,9 @@ spring:
     driver-class-name: org.postgresql.Driver
   data:
     mongodb:
-      uri: mongodb+srv://cluster0.kgvfyje.mongodb.net/onlinepayment?retryWrites=true&w=majority&appName=Cluster0
-      username: Jayxunbey
-      password: Ja2yx0un0be3y
+      uri: mongodb+srv://Jayxunbey:Ja2yx0un0be3y@cluster0.kgvfyje.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
       database: payment_system
-      repositories:
-        type: auto
+      auto-index-creation: true
 
   jpa:
     generate-ddl: true
