@@ -1,4 +1,4 @@
-package uz.pdp.online.onlinepayment.entity;
+package uz.pdp.online.onlinepayment.entity.inpostgres;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -9,11 +9,9 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
-@Table(name = "transfer_history")
-public class TransferHistory {
+@Table(name = "temp_send_sms_of_transfer")
+public class TempSendSmsOfTransfer {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "transfer_history_id_gen")
-    @SequenceGenerator(name = "transfer_history_id_gen", sequenceName = "transfer_history_id_seq", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -28,22 +26,23 @@ public class TransferHistory {
     @Column(name = "recipient_card", nullable = false)
     private String recipientCard;
 
-    @Column(name = "amount", nullable = false)
-    private Double amount;
-
-    @Column(name = "fee", nullable = false)
-    private Double fee;
-
-    @Column(name = "sender_full_name", nullable = false)
-    private String senderFullName;
-
     @Column(name = "recipient_full_name", nullable = false)
     private String recipientFullName;
 
     @Column(name = "created_date", nullable = false)
     private LocalDate createdDate;
 
-    @Column(name = "payment_date", nullable = false)
-    private LocalDate paymentDate;
+    @Column(name = "amount", nullable = false)
+    private Double amount;
+
+    @Column(name = "expiration", nullable = false)
+    private LocalDate expiration;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "transfer_status", nullable = false)
+    private TransferStatus transferStatus;
+
+    @Column(name = "sent_code", nullable = false)
+    private String sentCode;
 
 }
