@@ -1,4 +1,4 @@
-package uz.pdp.online.onlinepayment.entity;
+package uz.pdp.online.onlinepayment.entity.inpostgres;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

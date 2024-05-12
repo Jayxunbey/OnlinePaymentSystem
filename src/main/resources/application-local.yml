@@ -8,7 +8,19 @@ spring:
     username: postgres
     password: Jayxunbey2003
     driver-class-name: org.postgresql.Driver
+  data:
+    mongodb:
+      uri: mongodb+srv://cluster0.kgvfyje.mongodb.net/onlinepayment?retryWrites=true&w=majority&appName=Cluster0
+      username: Jayxunbey
+      password: Ja2yx0un0be3y
+      database: payment_system
+      repositories:
+        type: auto
 
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
 
 server:
   port: 8081
