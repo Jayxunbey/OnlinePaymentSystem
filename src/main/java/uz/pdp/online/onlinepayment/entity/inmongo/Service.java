@@ -1,6 +1,5 @@
 package uz.pdp.online.onlinepayment.entity.inmongo;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -23,8 +22,7 @@ public class Service {
 
     private String categoryId;
 
-    @Field(name = "service_number")
-    private String serviceNumber;
+    private String number;
 
     @Field(name = "request_address")
     private String requestAddress;
