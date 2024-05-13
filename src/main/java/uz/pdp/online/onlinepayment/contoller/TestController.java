@@ -34,7 +34,7 @@ public class TestController {
                 .build();
 
         Service insert = serviceRepository.insert(build);
-        System.out.println("insert.toString() = " + insert.toString());
+        System.out.println("insert.toString() = " + insert);
 
         return ResponseEntity.ok("Ishladi, Chotki");
 
