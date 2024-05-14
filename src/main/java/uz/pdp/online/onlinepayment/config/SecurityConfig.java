@@ -10,19 +10,12 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 
-    private final String[] WHITE_LIST = {
-            "/api/test/**",
-    };
+    private final String[] WHITE_LIST = {"/api/test/**",};
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http.csrf(AbstractHttpConfigurer::disable)
-                .cors(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(
-                        config -> config.requestMatchers(WHITE_LIST).permitAll()
-                                .anyRequest().authenticated())
-                .sessionManagement(config -> config.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        http.csrf(AbstractHttpConfigurer::disable).cors(AbstractHttpConfigurer::disable).authorizeHttpRequests(config -> config.requestMatchers(WHITE_LIST).permitAll().anyRequest().authenticated()).sessionManagement(config -> config.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         return http.build();
 

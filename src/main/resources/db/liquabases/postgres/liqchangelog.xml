@@ -4,6 +4,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd
      ">
-    <includeAll path="db/liquabases/postgres/entities"/>
+
+    <include file="/db/liquabases/postgres/entities/creating/creating-entities.xml"/>
 
 </databaseChangeLog>
