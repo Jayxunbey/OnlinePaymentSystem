@@ -4,7 +4,7 @@ spring:
       on-profile: local
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/online_payment_system
+    url: jdbc:postgresql://localhost:5432/payment_system
     username: postgres
     password: Jayxunbey2003
     driver-class-name: org.postgresql.Driver
@@ -14,10 +14,12 @@ spring:
       database: payment_system
       auto-index-creation: true
 
+  liquibase:
+    change-log: classpath:db/liquabases/postgres/liqchangelog.xml
+
   jpa:
-    generate-ddl: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
 
 server:
   port: 8081

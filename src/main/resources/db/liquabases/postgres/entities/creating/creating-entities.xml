@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1715715217395-1" author="jayxunbey (generated)">
+        <createSequence incrementBy="1" sequenceName="district_id_seq" startValue="1"/>
+    </changeSet>
+    <changeSet id="1715715217395-2" author="jayxunbey (generated)">
+        <createSequence incrementBy="1" sequenceName="region_id_seq" startValue="1"/>
+    </changeSet>
+    <changeSet id="1715715217395-3" author="jayxunbey (generated)">
+        <createSequence incrementBy="1" sequenceName="transfer_history_id_seq" startValue="1"/>
+    </changeSet>
+    <changeSet id="1715715217395-4" author="jayxunbey (generated)">
+        <createSequence incrementBy="1" sequenceName="transfer_status_id_seq" startValue="1"/>
+    </changeSet>
+    <changeSet id="1715715217395-5" author="jayxunbey (generated)">
+        <createTable tableName="district">
+            <column name="id" type="INT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_district"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="region_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1715715217395-6" author="jayxunbey (generated)">
+        <createTable tableName="person_identify">
+            <column name="user_id" type="VARCHAR(255)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_person_identify"/>
+            </column>
+            <column name="first_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="birth_day" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_card" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="issued_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="expiration" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="jshshir" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1715715217395-7" author="jayxunbey (generated)">
+        <createTable tableName="plastic_card">
+            <column name="number" type="VARCHAR(255)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_plastic_card"/>
+            </column>
+            <column name="owner_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="phone_number" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="bank_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="bank_account_number" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="active" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="issued_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="expiration_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="balance" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1715715217395-8" author="jayxunbey (generated)">
+        <createTable tableName="region">
+            <column name="id" type="INT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_region"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1715715217395-9" author="jayxunbey (generated)">
+        <createTable tableName="registiration_temp_sent_code">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_registiration_temp_sent_code"/>
+            </column>
+            <column name="token" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sent_code" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="expiration" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1715715217395-10" author="jayxunbey (generated)">
+        <createTable tableName="temp_send_sms_of_transfer">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_temp_send_sms_of_transfer"/>
+            </column>
+            <column name="user_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="debit_card" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="recipient_card" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="recipient_full_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="amount" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="expiration" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="transfer_status" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sent_code" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1715715217395-11" author="jayxunbey (generated)">
+        <createTable tableName="transfer_history">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_transfer_history"/>
+            </column>
+            <column name="user_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="debit_card" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="recipient_card" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="amount" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fee" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sender_full_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="recipient_full_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="payment_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1715715217395-12" author="jayxunbey (generated)">
+        <createTable tableName="transfer_status">
+            <column name="id" type="INT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_transfer_status"/>
+            </column>
+            <column name="fee" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="active" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1715715217395-13" author="jayxunbey (generated)">
+        <createTable tableName="users">
+            <column name="id" type="VARCHAR(255)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_users"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="phone" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="active" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="identify" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1715715217395-14" author="jayxunbey (generated)">
+        <addForeignKeyConstraint baseColumnNames="region_id" baseTableName="district"
+                                 constraintName="FK_DISTRICT_ON_REGION" referencedColumnNames="id"
+                                 referencedTableName="region"/>
+    </changeSet>
+    <changeSet id="1715715217395-15" author="jayxunbey (generated)">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="plastic_card"
+                                 constraintName="FK_PLASTIC_CARD_ON_USER" referencedColumnNames="id"
+                                 referencedTableName="users"/>
+    </changeSet>
+    <changeSet id="1715715217395-16" author="jayxunbey (generated)">
+        <addForeignKeyConstraint baseColumnNames="debit_card" baseTableName="temp_send_sms_of_transfer"
+                                 constraintName="FK_TEMP_SEND_SMS_OF_TRANSFER_ON_DEBIT_CARD"
+                                 referencedColumnNames="number" referencedTableName="plastic_card"/>
+    </changeSet>
+    <changeSet id="1715715217395-17" author="jayxunbey (generated)">
+        <addForeignKeyConstraint baseColumnNames="transfer_status" baseTableName="temp_send_sms_of_transfer"
+                                 constraintName="FK_TEMP_SEND_SMS_OF_TRANSFER_ON_TRANSFER_STATUS"
+                                 referencedColumnNames="id" referencedTableName="transfer_status"/>
+    </changeSet>
+    <changeSet id="1715715217395-18" author="jayxunbey (generated)">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="temp_send_sms_of_transfer"
+                                 constraintName="FK_TEMP_SEND_SMS_OF_TRANSFER_ON_USER" referencedColumnNames="id"
+                                 referencedTableName="users"/>
+    </changeSet>
+    <changeSet id="1715715217395-19" author="jayxunbey (generated)">
+        <addForeignKeyConstraint baseColumnNames="debit_card" baseTableName="transfer_history"
+                                 constraintName="FK_TRANSFER_HISTORY_ON_DEBIT_CARD" referencedColumnNames="number"
+                                 referencedTableName="plastic_card"/>
+    </changeSet>
+    <changeSet id="1715715217395-20" author="jayxunbey (generated)">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="transfer_history"
+                                 constraintName="FK_TRANSFER_HISTORY_ON_USER" referencedColumnNames="id"
+                                 referencedTableName="users"/>
+    </changeSet>
+
+</databaseChangeLog>
