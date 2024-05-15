@@ -4,9 +4,9 @@ spring:
       on-profile: local
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/payment_system
+    url: payment_system
     username: postgres
-    password: Jayxunbey2003
+    password: 08211110476
     driver-class-name: org.postgresql.Driver
   data:
     mongodb:

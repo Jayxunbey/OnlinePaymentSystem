@@ -18,5 +18,6 @@ public class Category {
     private String number;
     private String name;
     private String type;
+    private boolean active;
 
 }
