@@ -15,6 +15,7 @@ import uz.pdp.online.onlinepayment.repo.inmongo.ServiceRepository;
 public class TestController {
 
     private final ServiceRepository serviceRepository;
+    private String a;
 
     @GetMapping("/get")
     public ResponseEntity<String> get() {
