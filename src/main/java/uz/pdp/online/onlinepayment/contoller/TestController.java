@@ -17,6 +17,7 @@ public class TestController {
     private final ServiceRepository serviceRepository;
     private String a;
     private String b;
+    private String c;
 
     @GetMapping("/get")
     public ResponseEntity<String> get() {
