@@ -25,11 +25,12 @@ public class JwtService {
     private String SECRET_KEY;
 
     public String generateToken(String username, boolean rememberMe) {
+        System.out.println("Generating JWT token1");
         return generateToken(username, new HashMap<>(), rememberMe);
     }
 
     public String generateToken(String username, Map<String, Object> claims, boolean rememberMe) {
-
+        System.out.println("Generating JWT token2");
         int expiration;
         if (rememberMe) {
             expiration = expirationWithRememberMeTimeMinute;
@@ -40,12 +41,13 @@ public class JwtService {
     }
 
     private String buildToken(String username, Map<String, Object> claims, int expiration) {
+        System.out.println("Generating JWT token3");
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(username)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + (long) expiration * 60 * 1000))
-                .signWith(getSignKey(), SignatureAlgorithm.ES256)
+                .signWith(getSignKey())
                 .compact();
     }
 
