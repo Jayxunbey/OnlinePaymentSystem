@@ -21,6 +21,12 @@ spring:
     hibernate:
       ddl-auto: validate
 
+  security:
+    jwt:
+      secret-key: 3cfa76ef14937c1c0ea519f8fc057a80fcd04a7420f8e8bcd0a7567c272e007b
+      login-remember-me-expiration-time-minut: 21600
+      login-without-remember-me-expiration-time-minut: 1440
+
 server:
   port: 8081
 
