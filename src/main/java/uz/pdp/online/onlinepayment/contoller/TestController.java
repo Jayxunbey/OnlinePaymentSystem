@@ -18,7 +18,7 @@ public class TestController {
 
     @GetMapping("/get")
     public ResponseEntity<String> get() {
-
+int a=2;
         Service build = Service.builder().active(true).categoryId("5").name("PDP Academy").requestAddress("https://click.uz/api/pay/").number("4489449465465").fee(864654.55).fields(new Field[]{Field.builder().name("invoice_number").type("text").required(true).build(), Field.builder().name("amount").type("number").required(true).build()}).build();
 
         Service insert = serviceRepository.insert(build);
