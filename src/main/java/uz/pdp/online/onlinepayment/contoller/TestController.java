@@ -33,7 +33,7 @@ public class TestController {
     @GetMapping("/token")
     private ResponseEntity<String> getToken(){
 
-        String token = jwtService.generateToken("Jayxunbey", true);
+        String token = jwtService.generateToken("Jayxun", true);
         return ResponseEntity.ok(token);
 
     }
