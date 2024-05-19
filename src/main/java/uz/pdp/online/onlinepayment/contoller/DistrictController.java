@@ -20,7 +20,7 @@ public class DistrictController {
     public ResponseEntity<List<District>> getAllDistricts() {
         return ResponseEntity.ok(districtService.getAllDistricts());
     }
-
+//
     @GetMapping("/{id}")
     public ResponseEntity<District> getDistrictById(@PathVariable Integer id) {
         Optional<District> district = districtService.getDistrictById(id);
