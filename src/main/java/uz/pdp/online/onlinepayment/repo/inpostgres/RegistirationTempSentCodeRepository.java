@@ -7,5 +7,5 @@ import java.util.Date;
 
 public interface RegistirationTempSentCodeRepository extends JpaRepository<RegistirationTempSentCode, Long> {
 
-    long deleteByExpirationBefore(Date expiration);
+    void deleteByExpirationBefore(Date expiration);
 }
