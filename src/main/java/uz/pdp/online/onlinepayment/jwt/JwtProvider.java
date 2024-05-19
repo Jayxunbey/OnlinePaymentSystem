@@ -1,7 +1,7 @@
-package uz.pdp.online.onlinepayment.common.jwt;
+package uz.pdp.online.onlinepayment.jwt;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class JwtService {
+public class JwtProvider {
 
     @Value("${spring.security.jwt.login-remember-me-expiration-time-minute}")
     private int expirationWithRememberMeTimeMinute;
@@ -24,13 +24,30 @@ public class JwtService {
     @Value("${spring.security.jwt.secret-key}")
     private String SECRET_KEY;
 
+    public Claims parse(String token) {
+
+        return Jwts
+                .parser()
+                .verifyWith(getSignKey())
+                .build()
+                .parseSignedClaims(token).getPayload();
+    }
+
+    public String addBearerToken(String token) {
+        return "Bearer " + token;
+    }
+
+    public String extractTokenFromHeader(String headerValue) {
+        headerValue = headerValue.replace("Bearer ", "");
+        return headerValue;
+    }
+
+
     public String generateToken(String username, boolean rememberMe) {
-        System.out.println("Generating JWT token1");
         return generateToken(username, new HashMap<>(), rememberMe);
     }
 
     public String generateToken(String username, Map<String, Object> claims, boolean rememberMe) {
-        System.out.println("Generating JWT token2");
         int expiration;
         if (rememberMe) {
             expiration = expirationWithRememberMeTimeMinute;
@@ -56,4 +73,21 @@ public class JwtService {
         return Keys.hmacShaKeyFor(decode);
     }
 
+
+    public boolean isValid(Claims claims) {
+        return claims.getExpiration().after(new Date());
+    }
+
+    public String getSubject(Claims claims) {
+        return claims.getSubject();
+    }
+
+    public String generateTokenForSendingSms(String phone, String randomCode, int expiration) {
+        return Jwts.builder()
+                .signWith(getSignKey())
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + (long) expiration * 60 * 1000))
+                .subject(phone)
+                .compact();
+    }
 }

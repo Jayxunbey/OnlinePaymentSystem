@@ -5,19 +5,35 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
 
-    private final String[] WHITE_LIST = {"/api/test/**",};
+    private final String[] WHITE_LIST = {"/api/test/**","/api/auth/**"};
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http.csrf(AbstractHttpConfigurer::disable).cors(AbstractHttpConfigurer::disable).authorizeHttpRequests(config -> config.requestMatchers(WHITE_LIST).permitAll().anyRequest().authenticated()).sessionManagement(config -> config.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        http
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(config ->
+                        config.requestMatchers(WHITE_LIST)
+                                .permitAll()
+                                .anyRequest()
+                                .authenticated())
+                .sessionManagement(config ->
+                        config.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         return http.build();
-
     }
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+
 }

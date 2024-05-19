@@ -2,25 +2,22 @@ package uz.pdp.online.onlinepayment.common.jwt;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import uz.pdp.online.onlinepayment.jwt.JwtProvider;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class JwtServiceTest {
+class JwtProviderTest {
 
 //    @MockBean
-    private JwtService jwtService;
+    private JwtProvider jwtProvider;
 
     @BeforeEach
     void setUp() {
-        jwtService = Mockito.mock(JwtService.class);
+        jwtProvider = Mockito.mock(JwtProvider.class);
 }
 
     @Test
     void generateToken() {
-    String token = jwtService.generateToken("Jayxunbey", true);
+    String token = jwtProvider.generateToken("Jayxunbey", true);
         System.out.println("token = " + token);
     }
 

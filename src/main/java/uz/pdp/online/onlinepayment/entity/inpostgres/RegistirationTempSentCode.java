@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -27,4 +28,13 @@ public class RegistirationTempSentCode {
     @Column(name = "expiration", nullable = false)
     private LocalDate expiration;
 
+    public RegistirationTempSentCode(String token, String sentCode, Date expiration) {
+        this.token = token;
+        this.sentCode = sentCode;
+//        this.expiration = LocalDate;
+    }
+
+    public RegistirationTempSentCode() {
+
+    }
 }
