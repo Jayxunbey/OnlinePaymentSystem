@@ -8,11 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 import uz.pdp.online.onlinepayment.entity.inmongo.Field;
 import uz.pdp.online.onlinepayment.entity.inmongo.Service;
 import uz.pdp.online.onlinepayment.repo.inmongo.ServiceRepository;
-import org.springframework.web.bind.annotation.*;
-
-
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -38,56 +33,5 @@ public class TestController {
 
         return ResponseEntity.ok("Ishladi, Chotki");
 
-    }
-
-    @PostMapping("/create")
-    public ResponseEntity<Service> create(@RequestBody Service service) {
-        Service savedService = serviceRepository.insert(service);
-        return ResponseEntity.ok(savedService);
-    }
-
-    @GetMapping("/all")
-    public ResponseEntity<List<Service>> getAll() {
-        List<Service> services = serviceRepository.findAll();
-        return ResponseEntity.ok(services);
-    }
-
-    @GetMapping("/get/{id}")
-    public ResponseEntity<Service> getById(@PathVariable String id) {
-        Optional<Service> serviceOptional = serviceRepository.findById(id);
-        if (serviceOptional.isPresent()) {
-            return ResponseEntity.ok(serviceOptional.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Service> update(@PathVariable String id,
-                                          @RequestBody Service serviceDetails) {
-        Optional<Service> serviceOptional = serviceRepository.findById(id);
-        if (serviceOptional.isPresent()) {
-            Service service = serviceOptional.get();
-            service.setCategoryId(serviceDetails.getCategoryId());
-            service.setName(serviceDetails.getName());
-            service.setRequestAddress(serviceDetails.getRequestAddress());
-            service.setNumber(serviceDetails.getNumber());
-            service.setFee(serviceDetails.getFee());
-            service.setFields(serviceDetails.getFields());
-            Service updatedService = serviceRepository.save(service);
-            return ResponseEntity.ok(updatedService);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> delete(@PathVariable String id) {
-        if (serviceRepository.existsById(id)) {
-            serviceRepository.deleteById(id);
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
     }
 }
