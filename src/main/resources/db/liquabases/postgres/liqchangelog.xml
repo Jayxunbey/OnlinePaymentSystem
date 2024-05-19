@@ -6,5 +6,7 @@
      ">
 
     <include file="/db/liquabases/postgres/entities/creating/creating-entities.xml"/>
+    <include file="db/liquabases/postgres/entities/changingdatatype/19-01-changelog.xml"/>
+
 
 </databaseChangeLog>

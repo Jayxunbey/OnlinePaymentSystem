@@ -49,4 +49,7 @@ public class RegistirationTempSentCodeService {
     }
 
 
+    public void deleteAllWhichBefore(Date date) {
+        registirationTempSentCodeRepository.deleteByExpirationBefore(date);
+    }
 }
