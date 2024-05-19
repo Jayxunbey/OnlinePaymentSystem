@@ -17,7 +17,6 @@ import javax.security.auth.login.AccountNotFoundException;
 public class AuthService {
 
     private final UserService userService;
-    private final JwtProvider jwtProvider;
     private final RegistirationTempSentCodeService registirationTempSentCodeService;
 
     public RegistirationTempSentCodeRespDto auth(UserSignUpDto userSignUpDto) throws AccountException {
