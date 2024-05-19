@@ -82,12 +82,12 @@ public class JwtProvider {
         return claims.getSubject();
     }
 
-    public String generateTokenForSendingSms(String phone, String randomCode, int expiration) {
+    public String generateTokenForSendingSms(Map<String, String> claims, String randomCode, int expiration) {
         return Jwts.builder()
                 .signWith(getSignKey())
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + (long) expiration * 60 * 1000))
-                .subject(phone)
+                .claims(claims)
                 .compact();
     }
 }
