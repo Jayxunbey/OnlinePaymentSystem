@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import uz.pdp.online.onlinepayment.dto.SaveDto;
+import uz.pdp.online.onlinepayment.dto.signup.req.SaveDto;
 import uz.pdp.online.onlinepayment.entity.inmongo.Category;
-import uz.pdp.online.onlinepayment.repo.CategoryRepository;
+import uz.pdp.online.onlinepayment.repo.inmongo.CategoryRepository;
 
 import java.util.List;
 
