@@ -1,12 +1,11 @@
 package uz.pdp.online.onlinepayment.service;
 
-import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import uz.pdp.online.onlinepayment.dto.jay.signup.req.UserSignUpDto;
-import uz.pdp.online.onlinepayment.dto.jay.signup.resp.RegistirationTempSentCodeRespDto;
+import uz.pdp.online.onlinepayment.dto.signup.req.UserSignUpDto;
+import uz.pdp.online.onlinepayment.dto.signup.resp.RegistirationTempSentCodeRespDto;
 import uz.pdp.online.onlinepayment.entity.inpostgres.RegistirationTempSentCode;
 import uz.pdp.online.onlinepayment.jwt.JwtProvider;
 import uz.pdp.online.onlinepayment.repo.inpostgres.RegistirationTempSentCodeRepository;

@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import uz.pdp.online.onlinepayment.dto.jay.signup.req.UserLoginDto;
+import uz.pdp.online.onlinepayment.dto.signup.req.UserLoginDto;
 import uz.pdp.online.onlinepayment.entity.inpostgres.RegistirationTempSentCode;
 import uz.pdp.online.onlinepayment.entity.inpostgres.User;
 import uz.pdp.online.onlinepayment.jwt.JwtProvider;
