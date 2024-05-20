@@ -26,13 +26,10 @@ public class JwtFilter extends OncePerRequestFilter {
         String header = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (header == null || !header.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
+            return;
         }
 
         String token = jwtProvider.extractTokenFromHeader(header);
-        if (token != null) {
-            filterChain.doFilter(request, response);
-        }
-
         Claims parsed = jwtProvider.parse(token);
 
         if(!jwtProvider.isValid(parsed)){
@@ -44,12 +41,11 @@ public class JwtFilter extends OncePerRequestFilter {
 
 
 
-
 //        var authentication = new UsernamePasswordAuthenticationToken();
 //        SecurityContextHolder.getContext().setAuthentication(authentication);
 
 
 
-
+        filterChain.doFilter(request, response);
     }
 }
