@@ -2,12 +2,11 @@ package uz.pdp.online.onlinepayment.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import uz.pdp.online.onlinepayment.dto.jay.signup.req.UserLoginDto;
-import uz.pdp.online.onlinepayment.dto.jay.signup.req.UserSignUpConfirmDto;
-import uz.pdp.online.onlinepayment.dto.jay.signup.req.UserSignUpDto;
-import uz.pdp.online.onlinepayment.dto.jay.signup.resp.RegistirationTempSentCodeRespDto;
+import uz.pdp.online.onlinepayment.dto.signup.req.UserLoginDto;
+import uz.pdp.online.onlinepayment.dto.signup.req.UserSignUpConfirmDto;
+import uz.pdp.online.onlinepayment.dto.signup.req.UserSignUpDto;
+import uz.pdp.online.onlinepayment.dto.signup.resp.RegistirationTempSentCodeRespDto;
 import uz.pdp.online.onlinepayment.entity.inpostgres.RegistirationTempSentCode;
-import uz.pdp.online.onlinepayment.jwt.JwtProvider;
 
 import javax.security.auth.login.AccountException;
 import javax.security.auth.login.AccountNotFoundException;

@@ -1,4 +1,4 @@
-package uz.pdp.online.onlinepayment.dto.jay.signup.req;
+package uz.pdp.online.onlinepayment.dto.signup.req;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;

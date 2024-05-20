@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import uz.pdp.online.onlinepayment.dto.jay.signup.req.UserLoginDto;
-import uz.pdp.online.onlinepayment.dto.jay.signup.req.UserSignUpConfirmDto;
-import uz.pdp.online.onlinepayment.dto.jay.signup.req.UserSignUpDto;
-import uz.pdp.online.onlinepayment.dto.jay.signup.resp.RegistirationTempSentCodeRespDto;
+import uz.pdp.online.onlinepayment.dto.signup.req.UserLoginDto;
+import uz.pdp.online.onlinepayment.dto.signup.req.UserSignUpConfirmDto;
+import uz.pdp.online.onlinepayment.dto.signup.req.UserSignUpDto;
+import uz.pdp.online.onlinepayment.dto.signup.resp.RegistirationTempSentCodeRespDto;
 import uz.pdp.online.onlinepayment.service.AuthService;
 
 import javax.security.auth.login.AccountException;

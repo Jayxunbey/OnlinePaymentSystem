@@ -1,4 +1,4 @@
-package uz.pdp.online.onlinepayment.dto.jay.signup.resp;
+package uz.pdp.online.onlinepayment.dto.signup.resp;
 
 import lombok.Value;
 import uz.pdp.online.onlinepayment.entity.inpostgres.RegistirationTempSentCode;
