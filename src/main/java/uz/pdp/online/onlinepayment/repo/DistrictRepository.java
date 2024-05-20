@@ -5,4 +5,5 @@ import uz.pdp.online.onlinepayment.entity.inpostgres.District;
 
 @Repository
 public interface DistrictRepository extends JpaRepository<District, Integer> {
+    boolean existsByName(String name);
 }

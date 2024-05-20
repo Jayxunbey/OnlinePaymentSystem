@@ -1,10 +1,10 @@
 package uz.pdp.online.onlinepayment.contoller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import uz.pdp.online.onlinepayment.dto.DistrictDTO;
+import uz.pdp.online.onlinepayment.dto.signup.req.ApiResultDTO;
+import uz.pdp.online.onlinepayment.dto.signup.req.DistrictDTO;
 import uz.pdp.online.onlinepayment.entity.inpostgres.District;
 import uz.pdp.online.onlinepayment.service.DistrictService;
 
@@ -28,12 +28,12 @@ public class DistrictController {
         return ResponseEntity.ok(district);
     }
 
-    @PostMapping
-    public ResponseEntity<District> createDistrict(@RequestBody DistrictDTO districtDTO) {
-        District district = districtService.createDistrict(districtDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(district);
-    }
 
+    @PostMapping("/create")
+    public ResponseEntity<ApiResultDTO<DistrictDTO>> createDistrict(@RequestBody DistrictDTO districtDTO) {
+        ApiResultDTO<DistrictDTO> result = districtService.createDistrict(districtDTO);
+        return ResponseEntity.status(result.isSuccess() ? 201 : 400).body(result);
+    }
     @PutMapping("/{id}")
     public ResponseEntity<District> updateDistrict(@PathVariable Integer id, @RequestBody DistrictDTO districtDTO) {
         District updatedDistrict = districtService.updateDistrict(id, districtDTO);

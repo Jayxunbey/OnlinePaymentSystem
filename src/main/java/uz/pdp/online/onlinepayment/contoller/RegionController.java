@@ -1,10 +1,10 @@
 package uz.pdp.online.onlinepayment.contoller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import uz.pdp.online.onlinepayment.dto.RegionDTO;
+import uz.pdp.online.onlinepayment.dto.signup.req.ApiResultDTO;
+import uz.pdp.online.onlinepayment.dto.signup.req.RegionDTO;
 import uz.pdp.online.onlinepayment.entity.inpostgres.Region;
 import uz.pdp.online.onlinepayment.service.RegionService;
 
@@ -28,10 +28,10 @@ public class RegionController {
         return ResponseEntity.ok(region);
     }
 
-    @PostMapping
-    public ResponseEntity<Region> createRegion(@RequestBody RegionDTO regionDTO) {
-        Region region = regionService.createRegion(regionDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(region);
+    @PostMapping("/create")
+    public ResponseEntity<ApiResultDTO<RegionDTO>> createRegion(@RequestBody RegionDTO regionDTO) {
+        ApiResultDTO<RegionDTO> result = regionService.createRegion(regionDTO);
+        return ResponseEntity.status(result.isSuccess() ? 201 : 400).body(result);
     }
 
     @PutMapping("/{id}")

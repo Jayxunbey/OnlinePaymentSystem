@@ -12,7 +12,6 @@ public class District {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "district_id_gen")
     @SequenceGenerator(name = "district_id_gen", sequenceName = "district_id_seq", allocationSize = 1)
-    @Column(name = "id", nullable = false)
     private Integer id;
 
     @Column(name = "name", nullable = false)
@@ -21,5 +20,4 @@ public class District {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "region_id", nullable = false)
     private Region region;
-
 }
