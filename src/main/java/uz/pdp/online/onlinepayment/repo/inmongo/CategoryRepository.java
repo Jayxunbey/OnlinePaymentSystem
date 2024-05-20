@@ -1,4 +1,4 @@
-package uz.pdp.online.onlinepayment.repo;
+package uz.pdp.online.onlinepayment.repo.inmongo;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;

@@ -1,4 +1,4 @@
-package uz.pdp.online.onlinepayment.dto;
+package uz.pdp.online.onlinepayment.dto.signup.req;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
