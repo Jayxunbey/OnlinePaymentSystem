@@ -10,6 +10,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Component
@@ -18,7 +19,7 @@ public class CachingManager {
 
     private final CacheManager cacheManager;
 
-    @Scheduled(initialDelay = 20000, fixedDelay = 15000)
+    @Scheduled(cron = "59 23 * * *")
     public void autoFlushUsersCaching(){
         log.info("Auto delete users caching");
         Cache users = cacheManager.getCache("users");
