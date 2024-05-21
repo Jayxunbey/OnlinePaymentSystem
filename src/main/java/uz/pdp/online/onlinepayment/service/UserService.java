@@ -111,11 +111,6 @@ public class UserService {
                     }
                     users.put(user.getPhone(), user.getRole());
                 }
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
                 log.info("checking user role from DB");
             }
         }
