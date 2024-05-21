@@ -1,6 +1,10 @@
 package uz.pdp.online.onlinepayment.service;
 
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +20,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -24,6 +29,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final JwtProvider jwtProvider;
     private final PasswordEncoder passwordEncoder;
+    private final CacheManager cacheManager;
 
     public boolean isAvailable(String phone) {
 
@@ -81,5 +87,37 @@ public class UserService {
                         userLoginDto.isRememberMe()
                 )
         );
+    }
+
+    public void checkUser(Claims parsed) throws AccountException {
+        // this method returns true if active is true otherwise false
+
+        String phone = parsed.getSubject();
+        Cache users = cacheManager.getCache("users");
+        if (users != null) {
+            String role = users.get(phone, String.class);
+            if (role != null) {
+                String parsedRole = parsed.get("role", String.class);
+                if (!role.equals(parsedRole)) {
+                    throw new AccountException("Token is not valid");
+                }
+                log.info("checking user role in caching");
+            } else {
+                Optional<User> byPhone = userRepository.findByPhone(phone);
+                if (byPhone.isPresent()) {
+                    User user = byPhone.get();
+                    if (!user.getActive()) {
+                        throw new AccountException("Token is not valid");
+                    }
+                    users.put(user.getPhone(), user.getRole());
+                }
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                log.info("checking user role from DB");
+            }
+        }
     }
 }

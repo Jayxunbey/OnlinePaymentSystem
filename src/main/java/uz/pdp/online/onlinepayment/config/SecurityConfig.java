@@ -17,7 +17,7 @@ import uz.pdp.online.onlinepayment.jwt.JwtFilter;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final String[] WHITE_LIST = {"/api/test/**","/api/auth/sign-up"};
+    private final String[] WHITE_LIST = {"/api/auth/**"};
     private final JwtFilter jwtFilter;
 
     @Bean
@@ -38,9 +38,5 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
 
 }
