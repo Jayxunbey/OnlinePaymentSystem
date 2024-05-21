@@ -25,7 +25,6 @@ public class JwtProvider {
     private String SECRET_KEY;
 
     public Claims parse(String token) {
-
         return Jwts
                 .parser()
                 .verifyWith(getSignKey())
