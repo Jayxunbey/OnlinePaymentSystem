@@ -81,7 +81,7 @@ public class JwtProvider {
         return claims.getSubject();
     }
 
-    public String generateTokenForSendingSms(Map<String, String> claims, String randomCode, int expiration) {
+    public String generateTokenForSendingSms(Map<String, String> claims, int expiration) {
         return Jwts.builder()
                 .signWith(getSignKey())
                 .issuedAt(new Date())
