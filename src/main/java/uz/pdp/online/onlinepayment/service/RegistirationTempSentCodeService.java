@@ -36,7 +36,7 @@ public class RegistirationTempSentCodeService {
         claims.put("phone", userSignUpDto.getPhone());
         claims.put("name",userSignUpDto.getName());
 
-        String token = jwtProvider.generateTokenForSendingSms(claims, randomCode, expirationSendingSmsTimeMinute);
+        String token = jwtProvider.generateTokenForSendingSms(claims, expirationSendingSmsTimeMinute);
 
         RegistirationTempSentCode registirationTempSentCode =
                 new RegistirationTempSentCode(

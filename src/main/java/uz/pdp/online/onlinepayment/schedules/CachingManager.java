@@ -15,7 +15,7 @@ public class CachingManager {
 
     private final CacheManager cacheManager;
 
-    @Scheduled(cron = "59 23 * * *")
+    @Scheduled(cron = "59 23 * * * *")
     public void autoFlushUsersCaching(){
         log.info("Auto delete users caching");
         Cache users = cacheManager.getCache("users");
