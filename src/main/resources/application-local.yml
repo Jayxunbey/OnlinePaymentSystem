@@ -5,8 +5,8 @@ spring:
 
   datasource:
     url: jdbc:postgresql://localhost:5432/payment_system
-    username: abdulhafiz
-    password: 123
+    username: postgres
+    password: Jayxunbey2003
     driver-class-name: org.postgresql.Driver
   data:
     mongodb:

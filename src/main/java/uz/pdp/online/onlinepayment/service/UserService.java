@@ -62,6 +62,8 @@ public class UserService {
                 Map.of("role", user.getRole()),
                 false);
 
+
+
         return jwtProvider.addBearerToken(token);
     }
 
@@ -94,6 +96,9 @@ public class UserService {
 
         String phone = parsed.getSubject();
         Cache users = cacheManager.getCache("users");
+
+
+
         if (users != null) {
             String role = users.get(phone, String.class);
             if (role != null) {

@@ -3,8 +3,8 @@ package uz.pdp.online.onlinepayment.contoller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import uz.pdp.online.onlinepayment.dto.signup.req.ApiResultDTO;
-import uz.pdp.online.onlinepayment.dto.signup.req.DistrictDTO;
+import uz.pdp.online.onlinepayment.dto.signup.resp.ApiResultDTO;
+import uz.pdp.online.onlinepayment.dto.signup.req.DistrictReqDTO;
 import uz.pdp.online.onlinepayment.entity.inpostgres.District;
 import uz.pdp.online.onlinepayment.service.DistrictService;
 
@@ -19,7 +19,9 @@ public class DistrictController {
 
     @GetMapping
     public ResponseEntity<List<District>> getAllDistricts() {
-        return ResponseEntity.ok(districtService.getAllDistricts());
+        List<District> allDistricts = districtService.getAllDistricts();
+        System.out.println("allDistricts = " + allDistricts);
+        return ResponseEntity.ok(allDistricts);
     }
 
     @GetMapping("/{id}")
@@ -30,17 +32,17 @@ public class DistrictController {
 
 
     @PostMapping("/create")
-    public ResponseEntity<ApiResultDTO<DistrictDTO>> createDistrict(@RequestBody DistrictDTO districtDTO) {
-        ApiResultDTO<DistrictDTO> result = districtService.createDistrict(districtDTO);
+    public ResponseEntity<ApiResultDTO<DistrictReqDTO>> createDistrict(@RequestBody DistrictReqDTO districtReqDTO) {
+        ApiResultDTO<DistrictReqDTO> result = districtService.createDistrict(districtReqDTO);
         return ResponseEntity.status(result.isSuccess() ? 201 : 400).body(result);
     }
-    @PutMapping("/{id}")
-    public ResponseEntity<District> updateDistrict(@PathVariable Integer id, @RequestBody DistrictDTO districtDTO) {
-        District updatedDistrict = districtService.updateDistrict(id, districtDTO);
+    @PutMapping("/update/{id}")
+    public ResponseEntity<District> updateDistrict(@PathVariable Integer id, @RequestBody DistrictReqDTO districtReqDTO) {
+        District updatedDistrict = districtService.updateDistrict(id, districtReqDTO);
         return ResponseEntity.ok(updatedDistrict);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteDistrict(@PathVariable Integer id) {
         districtService.deleteDistrict(id);
         return ResponseEntity.noContent().build();

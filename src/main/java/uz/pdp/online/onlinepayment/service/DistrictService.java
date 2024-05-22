@@ -2,8 +2,8 @@ package uz.pdp.online.onlinepayment.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import uz.pdp.online.onlinepayment.dto.signup.req.ApiResultDTO;
-import uz.pdp.online.onlinepayment.dto.signup.req.DistrictDTO;
+import uz.pdp.online.onlinepayment.dto.signup.resp.ApiResultDTO;
+import uz.pdp.online.onlinepayment.dto.signup.req.DistrictReqDTO;
 import uz.pdp.online.onlinepayment.entity.inpostgres.District;
 import uz.pdp.online.onlinepayment.entity.inpostgres.Region;
 import uz.pdp.online.onlinepayment.repo.DistrictRepository;
@@ -20,29 +20,29 @@ public class DistrictService {
     @Autowired
     private RegionRepository regionRepository;
 
-    private void checkUnique(DistrictDTO districtDTO) {
-        if (districtRepository.existsByName(districtDTO.getName())) {
+    private void checkUnique(DistrictReqDTO districtReqDTO) {
+        if (districtRepository.existsByName(districtReqDTO.getName())) {
             throw new RuntimeException("District with this name already exists");
         }
     }
 
-    public ApiResultDTO<DistrictDTO> createDistrict(DistrictDTO districtDTO) {
-        checkUnique(districtDTO);
+    public ApiResultDTO<DistrictReqDTO> createDistrict(DistrictReqDTO districtReqDTO) {
+        checkUnique(districtReqDTO);
 
-        Region region = regionRepository.findById(districtDTO.getRegionId())
-                .orElseThrow(() -> new RuntimeException("Region not found with id: " + districtDTO.getRegionId()));
+        Region region = regionRepository.findById(districtReqDTO.getRegionId())
+                .orElseThrow(() -> new RuntimeException("Region not found with id: " + districtReqDTO.getRegionId()));
 
         District district = new District();
-        district.setName(districtDTO.getName());
+        district.setName(districtReqDTO.getName());
         district.setRegion(region);
 
         districtRepository.save(district);
 
-        DistrictDTO createdDistrictDTO = new DistrictDTO();
-        createdDistrictDTO.setName(district.getName());
-        createdDistrictDTO.setRegionId(region.getId());
+        DistrictReqDTO createdDistrictReqDTO = new DistrictReqDTO();
+        createdDistrictReqDTO.setName(district.getName());
+        createdDistrictReqDTO.setRegionId(region.getId());
 
-        return ApiResultDTO.success(createdDistrictDTO);
+        return ApiResultDTO.success(createdDistrictReqDTO);
     }
 
     public List<District> getAllDistricts() {
@@ -54,12 +54,12 @@ public class DistrictService {
                 .orElseThrow(() -> new RuntimeException("District not found with id: " + id));
     }
 
-    public District updateDistrict(Integer id, DistrictDTO districtDTO) {
+    public District updateDistrict(Integer id, DistrictReqDTO districtReqDTO) {
         District district = getDistrictById(id);
-        district.setName(districtDTO.getName());
+        district.setName(districtReqDTO.getName());
 
-        Region region = regionRepository.findById(districtDTO.getRegionId())
-                .orElseThrow(() -> new RuntimeException("Region not found with id: " + districtDTO.getRegionId()));
+        Region region = regionRepository.findById(districtReqDTO.getRegionId())
+                .orElseThrow(() -> new RuntimeException("Region not found with id: " + districtReqDTO.getRegionId()));
 
         district.setRegion(region);
 

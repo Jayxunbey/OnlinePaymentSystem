@@ -4,7 +4,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class DistrictDTO {
+public class RegionReqDTO {
     private String name;
-    private Integer regionId;
 }

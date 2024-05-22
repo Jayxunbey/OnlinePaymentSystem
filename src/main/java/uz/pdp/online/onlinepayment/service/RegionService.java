@@ -2,8 +2,8 @@ package uz.pdp.online.onlinepayment.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import uz.pdp.online.onlinepayment.dto.signup.req.ApiResultDTO;
-import uz.pdp.online.onlinepayment.dto.signup.req.RegionDTO;
+import uz.pdp.online.onlinepayment.dto.signup.resp.ApiResultDTO;
+import uz.pdp.online.onlinepayment.dto.signup.req.RegionReqDTO;
 import uz.pdp.online.onlinepayment.entity.inpostgres.Region;
 import uz.pdp.online.onlinepayment.repo.RegionRepository;
 
@@ -24,28 +24,28 @@ public class RegionService {
                 .orElseThrow(() -> new RuntimeException("Region not found with id: " + id));
     }
 
-    private void checkUnique(RegionDTO regionDTO) {
-        if (regionRepository.existsByName(regionDTO.getName())) {
+    private void checkUnique(RegionReqDTO regionReqDTO) {
+        if (regionRepository.existsByName(regionReqDTO.getName())) {
             throw new RuntimeException("Region with this name already exists");
         }
     }
 
-    public ApiResultDTO<RegionDTO> createRegion(RegionDTO regionDTO) {
-        checkUnique(regionDTO);
+    public ApiResultDTO<RegionReqDTO> createRegion(RegionReqDTO regionReqDTO) {
+        checkUnique(regionReqDTO);
 
         Region region = new Region();
-        region.setName(regionDTO.getName());
+        region.setName(regionReqDTO.getName());
         regionRepository.save(region);
 
-        RegionDTO createdRegionDTO = new RegionDTO();
-        createdRegionDTO.setName(region.getName());
+        RegionReqDTO createdRegionReqDTO = new RegionReqDTO();
+        createdRegionReqDTO.setName(region.getName());
 
-        return ApiResultDTO.success(createdRegionDTO);
+        return ApiResultDTO.success(createdRegionReqDTO);
     }
 
-    public Region updateRegion(Integer id, RegionDTO regionDTO) {
+    public Region updateRegion(Integer id, RegionReqDTO regionReqDTO) {
         Region region = getRegionById(id);
-        region.setName(regionDTO.getName());
+        region.setName(regionReqDTO.getName());
         return regionRepository.save(region);
     }
 

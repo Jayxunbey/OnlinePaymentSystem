@@ -1,4 +1,4 @@
-package uz.pdp.online.onlinepayment.dto.signup.req;
+package uz.pdp.online.onlinepayment.dto.signup.resp;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
