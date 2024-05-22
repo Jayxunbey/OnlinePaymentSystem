@@ -28,4 +28,8 @@ public class User {
 
     @Column(name = "identify", nullable = false)
     private Boolean identify = false;
+
+    @Column(name = "role", nullable = false)
+    private String role;
+
 }

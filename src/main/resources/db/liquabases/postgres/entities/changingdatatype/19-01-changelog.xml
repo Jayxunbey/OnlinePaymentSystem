@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd">
+
+    <changeSet id="1716112834854-1" author="jayxunbey">
+        <modifyDataType tableName="registiration_temp_sent_code" columnName="expiration" newDataType="datetime"/>
+    </changeSet>
+    <changeSet id="1716115627871-1" author="jayxunbey">
+        <dropColumn tableName="registiration_temp_sent_code" columnName="id"/>
+    </changeSet>
+    <changeSet id="1716115654359-1" author="jayxunbey">
+        <addPrimaryKey tableName="registiration_temp_sent_code" columnNames="token"/>
+    </changeSet>
+
+
+
+</databaseChangeLog>

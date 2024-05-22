@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import uz.pdp.online.onlinepayment.jwt.JwtProvider;
 import uz.pdp.online.onlinepayment.entity.inmongo.Field;
 import uz.pdp.online.onlinepayment.entity.inmongo.Service;
 import uz.pdp.online.onlinepayment.repo.inmongo.ServiceRepository;
@@ -15,6 +16,9 @@ import uz.pdp.online.onlinepayment.repo.inmongo.ServiceRepository;
 public class TestController {
 
     private final ServiceRepository serviceRepository;
+
+    private final JwtProvider jwtProvider;
+
 
     @GetMapping("/get")
     public ResponseEntity<String> get() {
@@ -34,4 +38,13 @@ public class TestController {
         return ResponseEntity.ok("Ishladi, Chotki");
 
     }
+
+    @GetMapping("/token")
+    private ResponseEntity<String> getToken(){
+
+        String token = jwtProvider.generateToken("Jayxun", true);
+        return ResponseEntity.ok(token);
+
+    }
+
 }
