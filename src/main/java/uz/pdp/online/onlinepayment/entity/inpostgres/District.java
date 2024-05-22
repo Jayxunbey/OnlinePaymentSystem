@@ -3,6 +3,7 @@ package uz.pdp.online.onlinepayment.entity.inpostgres;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
@@ -17,7 +18,7 @@ public class District {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "region_id", nullable = false)
     private Region region;
 }

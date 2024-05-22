@@ -26,6 +26,7 @@ public class DistrictController {
 
     @GetMapping("/{id}")
     public ResponseEntity<District> getDistrictById(@PathVariable Integer id) {
+
         District district = districtService.getDistrictById(id);
         return ResponseEntity.ok(district);
     }
