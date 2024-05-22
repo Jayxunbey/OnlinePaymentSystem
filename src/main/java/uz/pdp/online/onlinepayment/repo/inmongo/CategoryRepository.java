@@ -9,4 +9,8 @@ import java.util.Optional;
 @Repository
 public interface CategoryRepository extends MongoRepository<Category, Integer> {
     Optional<Category> findById(String id);
+
+    long countById(String id);
+
+    Category findByNumber(String number);
 }

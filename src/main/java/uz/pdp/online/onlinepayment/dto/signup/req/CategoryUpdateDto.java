@@ -9,10 +9,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SaveDto {
-    private Long id;
-    private String number;
+public class CategoryUpdateDto {
     private String name;
     private String type;
     private boolean active;
 }
+

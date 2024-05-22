@@ -12,7 +12,7 @@ public class CasheConfig {
     @Bean
     CacheManager cacheManager() {
         ConcurrentMapCacheManager concurrentMapCacheManager = new ConcurrentMapCacheManager();
-        concurrentMapCacheManager.setCacheNames(List.of("users"));
+        concurrentMapCacheManager.setCacheNames(List.of("users","number_for_entities"));
         return concurrentMapCacheManager;
     }
 }
