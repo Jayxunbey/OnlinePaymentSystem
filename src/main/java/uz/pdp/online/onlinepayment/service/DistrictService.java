@@ -6,8 +6,8 @@ import uz.pdp.online.onlinepayment.dto.signup.resp.ApiResultDTO;
 import uz.pdp.online.onlinepayment.dto.signup.req.DistrictReqDTO;
 import uz.pdp.online.onlinepayment.entity.inpostgres.District;
 import uz.pdp.online.onlinepayment.entity.inpostgres.Region;
-import uz.pdp.online.onlinepayment.repo.DistrictRepository;
-import uz.pdp.online.onlinepayment.repo.RegionRepository;
+import uz.pdp.online.onlinepayment.repo.inpostgres.DistrictRepository;
+import uz.pdp.online.onlinepayment.repo.inpostgres.RegionRepository;
 
 import java.util.List;
 

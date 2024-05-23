@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import uz.pdp.online.onlinepayment.dto.signup.resp.ApiResultDTO;
 import uz.pdp.online.onlinepayment.dto.signup.req.RegionReqDTO;
 import uz.pdp.online.onlinepayment.entity.inpostgres.Region;
-import uz.pdp.online.onlinepayment.repo.RegionRepository;
+import uz.pdp.online.onlinepayment.repo.inpostgres.RegionRepository;
 
 import java.util.List;
 
