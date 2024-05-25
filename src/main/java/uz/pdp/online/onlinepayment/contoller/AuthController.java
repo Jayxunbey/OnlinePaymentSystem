@@ -24,7 +24,6 @@ import javax.security.auth.login.AccountNotFoundException;
 public class AuthController {
 
     private final AuthService authService;
-
     @PostMapping("/sign-up")
     public ResponseEntity<RegistirationTempSentCodeRespDto> signUp(@RequestBody @Valid UserSignUpDto userSignUpDto) throws AccountException {
 

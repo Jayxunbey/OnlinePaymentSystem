@@ -17,6 +17,7 @@ import java.util.Random;
 
 @RestController
 @RequestMapping("/categories")
+    
 public class CategoryController {
 
     private final CategoryRepository categoryRepository;

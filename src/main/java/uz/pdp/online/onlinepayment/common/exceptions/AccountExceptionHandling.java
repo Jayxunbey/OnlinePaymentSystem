@@ -14,14 +14,12 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class AccountExceptionHandling {
-    @ExceptionHandler({AccountException.class})
-    public ResponseEntity<Map<String , String>> handleValidationException(MethodArgumentNotValidException ex) {
-        List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
-        Map<String, String> errors = new HashMap<>();
 
-        fieldErrors.forEach(fieldError -> {
-            errors.put(fieldError.getField(), fieldError.getDefaultMessage());
-        });
+    @ExceptionHandler({AccountException.class})
+    public ResponseEntity<Map<String , String>> handleValidationException(AccountException ex) {
+        String message = ex.getMessage();
+        Map<String, String> errors = new HashMap<>();
+        errors.put("error", message);
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(errors);
     }
 }
