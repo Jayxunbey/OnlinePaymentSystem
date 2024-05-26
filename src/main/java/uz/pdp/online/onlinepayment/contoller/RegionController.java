@@ -2,6 +2,7 @@ package uz.pdp.online.onlinepayment.contoller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.online.onlinepayment.dto.signup.resp.ApiResultDTO;
 import uz.pdp.online.onlinepayment.dto.signup.req.RegionReqDTO;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/regions")
+@Secured("ROLE_ADMIN")
 public class RegionController {
 
     @Autowired

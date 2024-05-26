@@ -3,9 +3,9 @@ package uz.pdp.online.onlinepayment.contoller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.online.onlinepayment.dto.signup.req.CategorySaveDto;
 import uz.pdp.online.onlinepayment.dto.signup.req.CategoryUpdateDto;
@@ -17,7 +17,7 @@ import java.util.Random;
 
 @RestController
 @RequestMapping("/categories")
-    
+@Secured("ROLE_ADMIN")
 public class CategoryController {
 
     private final CategoryRepository categoryRepository;

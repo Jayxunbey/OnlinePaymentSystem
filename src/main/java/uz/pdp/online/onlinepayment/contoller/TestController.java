@@ -2,17 +2,19 @@ package uz.pdp.online.onlinepayment.contoller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import uz.pdp.online.onlinepayment.jwt.JwtProvider;
 import uz.pdp.online.onlinepayment.entity.inmongo.Field;
 import uz.pdp.online.onlinepayment.entity.inmongo.Service;
+import uz.pdp.online.onlinepayment.jwt.JwtProvider;
 import uz.pdp.online.onlinepayment.repo.inmongo.ServiceRepository;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/test")
+@Secured("ROLE_USER")
 public class TestController {
 
     private final ServiceRepository serviceRepository;
