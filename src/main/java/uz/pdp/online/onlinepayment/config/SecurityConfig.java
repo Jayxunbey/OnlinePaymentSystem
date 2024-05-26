@@ -16,6 +16,8 @@ import uz.pdp.online.onlinepayment.jwt.JwtFilter;
 public class SecurityConfig {
 
     private final String[] WHITE_LIST = {"/api/auth/**"};
+    private final String[] SWAGGER_WHITE_LIST = {"/v3/api-docs/**","/swagger-ui/**"};
+
     private final JwtFilter jwtFilter;
 
     @Bean
@@ -26,6 +28,8 @@ public class SecurityConfig {
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(config ->
                         config.requestMatchers(HttpMethod.POST,WHITE_LIST)
+                                .permitAll()
+                                .requestMatchers(SWAGGER_WHITE_LIST)
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated())
