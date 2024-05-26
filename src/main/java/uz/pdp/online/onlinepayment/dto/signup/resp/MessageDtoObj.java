@@ -7,6 +7,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class ErrorDtoObj {
-    public String error;
+public class MessageDtoObj {
+    public String message;
 }

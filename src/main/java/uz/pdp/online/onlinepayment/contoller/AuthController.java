@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import uz.pdp.online.onlinepayment.dto.signup.req.UserLoginDto;
 import uz.pdp.online.onlinepayment.dto.signup.req.UserSignUpConfirmDto;
 import uz.pdp.online.onlinepayment.dto.signup.req.UserSignUpDto;
+import uz.pdp.online.onlinepayment.dto.signup.resp.MessageDtoObj;
 import uz.pdp.online.onlinepayment.dto.signup.resp.RegistirationTempSentCodeRespDto;
 import uz.pdp.online.onlinepayment.service.AuthService;
 
@@ -27,7 +28,7 @@ import javax.security.auth.login.AccountNotFoundException;
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
-@Tag(name = "Authentication",description = "To use all requests on this application you must authorize")
+@Tag(name = "Authentication", description = "To use all requests on this application you must authorize")
 public class AuthController {
 
     private final AuthService authService;
@@ -36,23 +37,27 @@ public class AuthController {
             responses = {@ApiResponse(
                     description = "Accepted and see other",
                     responseCode = "303"
-                    ),
+            ),
                     @ApiResponse(
                             description = "User already exists",
                             responseCode = "400",
                             content = {
                                     @Content(
                                             mediaType = MediaType.APPLICATION_JSON_VALUE,
-//                                            schema = @Schema(implementation = ErrorDtoObj.class),
-                                            examples = {@ExampleObject(value = "{\n\t\"error\":\"error message\"\n}")}
-//                                            array = @ArraySchema(schema = @Schema(implementation = ErrorDtoObj.class))
-                                           )
+                                            examples = {@ExampleObject(value = "{\n     \t\"error\":\"error message\"\n}")}
+                                    )
                             }
 
                     ),
                     @ApiResponse(
                             description = "Fields[] validating errors",
-                            responseCode = "406"
+                            responseCode = "406",
+                            content = {
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            examples = {@ExampleObject(value = "{\n     \t\"error\":\"error message\"\n}")}
+                                    )
+                            }
                     )
             }
     )
@@ -72,36 +77,89 @@ public class AuthController {
             description = "Sign up confirmation place",
             responses = {@ApiResponse(
                     description = "Created",
-                    responseCode = "201"
+                    responseCode = "201",
+                    content = {
+                            @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    examples = {@ExampleObject(value = "{\n     \t\"message\":\"Successfully created\"\n}")}
+                            )
+                    }
             ),
                     @ApiResponse(
                             description = "Not Acceptable",
-                            responseCode = "406"
+                            responseCode = "406",
+                            content = {
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            examples = {@ExampleObject(value = "{\n     \t\"error\":\"error message\"\n}")}
+                                    )
+                            }
                     ),
                     @ApiResponse(
                             description = "Fields[] validating errors",
-                            responseCode = "406"
+                            responseCode = "406",
+                            content = {
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            examples = {@ExampleObject(value = "{\n     \t\"error\":\"error message\"\n}")}
+                                    )
+                            }
                     )
             }
     )
 
     @PostMapping("/sign-up-confirm")
-    public ResponseEntity<String> signUpConfirm(@RequestBody @Valid UserSignUpConfirmDto signUpConfirmDto) throws AccountException {
+    public ResponseEntity<MessageDtoObj> signUpConfirm(@RequestBody @Valid UserSignUpConfirmDto signUpConfirmDto) throws AccountException {
         String authToken = authService.confirm(signUpConfirmDto);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .header(HttpHeaders.AUTHORIZATION, authToken)
-                .body("Registered Successfully");
+                .body(new MessageDtoObj("Successfully created"));
     }
 
+    @Operation(
+            tags = "Authentication",
+            description = "Login place",
+            responses = {@ApiResponse(
+                    description = "Accepted",
+                    responseCode = "202",
+                    content = {
+                            @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    examples = {@ExampleObject(value = "{\n     \t\"Logged Successfully\":\"Successfully created\"\n}")}
+                            )
+                    }
+            ),
+                    @ApiResponse(
+                            description = "User not found",
+                            responseCode = "406",
+                            content = {
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            examples = {@ExampleObject(value = "{\n     \t\"error\":\"error message\"\n}")}
+                                    )
+                            }
+                    ),
+                    @ApiResponse(
+                            description = "Fields[] validating errors",
+                            responseCode = "406",
+                            content = {
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            examples = {@ExampleObject(value = "{\n     \t\"error\":\"error message\"\n}")}
+                                    )
+                            }
+                    )
+            }
+    )
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody @Valid UserLoginDto userLoginDto) throws AccountNotFoundException {
+    public ResponseEntity<MessageDtoObj> login(@RequestBody @Valid UserLoginDto userLoginDto) throws AccountNotFoundException {
 
         String authToken = authService.login(userLoginDto);
 
         return ResponseEntity
                 .accepted()
                 .header(HttpHeaders.AUTHORIZATION, authToken)
-                .body("Login Success");
+                .body(new MessageDtoObj("Logged Successfully"));
     }
 }
