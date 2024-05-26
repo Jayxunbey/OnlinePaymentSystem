@@ -1,7 +1,9 @@
 package uz.pdp.online.onlinepayment.contoller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.online.onlinepayment.dto.signup.resp.ApiResultDTO;
 import uz.pdp.online.onlinepayment.dto.signup.req.DistrictReqDTO;
@@ -12,6 +14,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/districts")
+@Tag(name = "District",description = "You can modify on Districts when you was Admin")
+@Secured("ROLE_ADMIN")
 public class DistrictController {
 
     @Autowired

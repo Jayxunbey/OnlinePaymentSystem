@@ -2,15 +2,14 @@ package uz.pdp.online.onlinepayment.config;
 
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.servers.Server;
-import io.swagger.v3.oas.models.Components;
-import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.security.SecurityRequirement;
-import io.swagger.v3.oas.models.security.SecurityScheme;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
@@ -29,8 +28,13 @@ import org.springframework.context.annotation.Configuration;
                 ),
                 termsOfService = "https://wwww.wiki.com"
         ),
+        security = {
+                @SecurityRequirement(
+                        name = "auth"
+                )
+        },
         servers = {
-                @Server(url = "http://localhost:8081/swagger",
+                @Server(url = "http://localhost:8081/",
                         description = "Local Server"),
                 @Server(url = "http://localhost:8082/swagger",
                         description = "Production Server"),
@@ -39,6 +43,14 @@ import org.springframework.context.annotation.Configuration;
         }
 )
 
+@SecurityScheme(
+        name = "auth",
+        in = SecuritySchemeIn.HEADER,
+        type = SecuritySchemeType.HTTP,
+        bearerFormat = "JWT",
+        scheme = "bearer",
+        description = "security desc"
+)
 
 public class SwaggerConfig {
 //
