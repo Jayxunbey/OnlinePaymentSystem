@@ -3,6 +3,7 @@ package uz.pdp.online.onlinepayment.contoller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import uz.pdp.online.onlinepayment.dto.signup.req.UserLoginDto;
 import uz.pdp.online.onlinepayment.dto.signup.req.UserSignUpConfirmDto;
 import uz.pdp.online.onlinepayment.dto.signup.req.UserSignUpDto;
+import uz.pdp.online.onlinepayment.dto.signup.resp.FieldErrorArrayDtoObj;
 import uz.pdp.online.onlinepayment.dto.signup.resp.MessageDtoObj;
 import uz.pdp.online.onlinepayment.dto.signup.resp.RegistirationTempSentCodeRespDto;
 import uz.pdp.online.onlinepayment.service.AuthService;
@@ -55,7 +57,7 @@ public class AuthController {
                             content = {
                                     @Content(
                                             mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                            examples = {@ExampleObject(value = "{\n     \t\"error\":\"error message\"\n}")}
+                                            schema = @Schema(implementation = FieldErrorArrayDtoObj.class)
                                     )
                             }
                     )
@@ -101,7 +103,7 @@ public class AuthController {
                             content = {
                                     @Content(
                                             mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                            examples = {@ExampleObject(value = "{\n     \t\"error\":\"error message\"\n}")}
+                                            schema = @Schema(implementation = FieldErrorArrayDtoObj.class)
                                     )
                             }
                     )
@@ -126,7 +128,7 @@ public class AuthController {
                     content = {
                             @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    examples = {@ExampleObject(value = "{\n     \t\"Logged Successfully\":\"Successfully created\"\n}")}
+                                    examples = {@ExampleObject(value = "{\n     \t\"message\":\"Logged Successfully\"\n}")}
                             )
                     }
             ),
@@ -136,7 +138,7 @@ public class AuthController {
                             content = {
                                     @Content(
                                             mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                            examples = {@ExampleObject(value = "{\n     \t\"error\":\"error message\"\n}")}
+                                            examples = {@ExampleObject(value = "{\n     \t\"error\":\"user not found\"\n}")}
                                     )
                             }
                     ),
@@ -146,7 +148,7 @@ public class AuthController {
                             content = {
                                     @Content(
                                             mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                            examples = {@ExampleObject(value = "{\n     \t\"error\":\"error message\"\n}")}
+                                            schema = @Schema(implementation = FieldErrorArrayDtoObj.class)
                                     )
                             }
                     )

@@ -15,6 +15,7 @@ spring:
       database: payment_system
       auto-index-creation: true
 
+
   liquibase:
     change-log: classpath:db/liquabases/postgres/liqchangelog.xml
 
