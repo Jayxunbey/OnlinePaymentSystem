@@ -1,3 +1,4 @@
+# http://localhost:8081/swagger-ui/index.html#/
 spring:
   config:
     activate:
@@ -29,6 +30,11 @@ spring:
       login-without-remember-me-expiration-time-minute: 1440
       sending-sms-code-time-minute: 3
 
+
+springdoc:
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
 server:
   port: 8081
 
