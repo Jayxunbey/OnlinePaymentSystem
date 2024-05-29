@@ -1,8 +1,6 @@
 package uz.pdp.online.onlinepayment.contoller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.Cache;
-import org.springframework.cache.CacheManager;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -10,82 +8,43 @@ import org.springframework.web.bind.annotation.*;
 import uz.pdp.online.onlinepayment.dto.signup.req.CategorySaveDto;
 import uz.pdp.online.onlinepayment.dto.signup.req.CategoryUpdateDto;
 import uz.pdp.online.onlinepayment.entity.inmongo.Category;
-import uz.pdp.online.onlinepayment.repo.inmongo.CategoryRepository;
+import uz.pdp.online.onlinepayment.service.CategoryService;
 
 import java.util.List;
-import java.util.Random;
 
 @RestController
 @RequestMapping("/categories")
 @Secured("ROLE_ADMIN")
 public class CategoryController {
 
-    private final CategoryRepository categoryRepository;
-    private final CacheManager cacheManager;
+    private final CategoryService categoryService;
 
     @Autowired
-    public CategoryController(CategoryRepository categoryRepository, Random random, CacheManager cacheManager) {
-        this.categoryRepository = categoryRepository;
-        this.cacheManager = cacheManager;
+    public CategoryController(CategoryService categoryService) {
+        this.categoryService = categoryService;
     }
 
     @PostMapping("/create-category")
     public ResponseEntity<?> createCategory(@RequestBody CategorySaveDto categorySaveDto) {
-        Category category = new Category();
-        String number=null;
-
-        Cache categoryCache = cacheManager.getCache("number_for_entities");
-        if (categoryCache!=null) {
-            Integer cacheNumber = categoryCache.get("category", Integer.class);
-            if (cacheNumber==null) {
-                long count = categoryRepository.count();
-                Integer i = Integer.valueOf(String.valueOf(321000 + count));
-                categoryCache.put("category", i);
-                number = String.valueOf(i);
-            } else {
-                int setNumber = cacheNumber + 1;
-                categoryCache.put("category", setNumber);
-                number = String.valueOf(setNumber);
-            }
-        }
-
-        category.setNumber(number);
-        category.setName(categorySaveDto.getName());
-        category.setType(categorySaveDto.getType());
-        category.setActive(categorySaveDto.isActive());
-        categoryRepository.save(category);
+        categoryService.createCategory(categorySaveDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/update-category/{number}")
     public ResponseEntity<?> updateCategory(@PathVariable String number, @RequestBody CategoryUpdateDto categoryUpdateDto) {
-        Category category = categoryRepository.findByNumber(number);
-        if (category == null) {
-            return ResponseEntity.notFound().build();
-        }
-        category.setName(categoryUpdateDto.getName());
-        category.setType(categoryUpdateDto.getType());
-        category.setActive(categoryUpdateDto.isActive());
-
-        categoryRepository.save(category);
+        categoryService.updateCategory(number, categoryUpdateDto);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/showAllCategories")
     public ResponseEntity<List<Category>> showAllCategory() {
-        List<Category> categories = categoryRepository.findAll();
+        List<Category> categories = categoryService.showAllCategories();
         return ResponseEntity.ok(categories);
     }
 
     @DeleteMapping("/delete-categories/{number}")
     public ResponseEntity<Void> deleteCategory(@PathVariable String number) {
-        System.out.println("ishladi");
-        Category category = categoryRepository.findByNumber(number);
-        if (category == null) {
-            return ResponseEntity.notFound().build();
-        }
-        category.setActive(false);
-        categoryRepository.save(category);
+        categoryService.deleteCategory(number);
         return ResponseEntity.noContent().build();
     }
 }
