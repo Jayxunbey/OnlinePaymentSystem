@@ -21,7 +21,7 @@ public class CentralBankServices {
             plasticCardDetailsDtoMap.put("9860547515665162",
                     new PlasticCardDetailsDto("9860547515665162","Mirjalol Qosimov", "+998974574566","Ravnaq Bank","65645556565626236994",true, new SimpleDateFormat("dd.MM.yyyy").parse("04.05.2020"),new SimpleDateFormat("dd.MM.yyyy").parse("04.05.2025"),"HUMO"));
             plasticCardDetailsDtoMap.put("9860147565846321",
-                    new PlasticCardDetailsDto("8600457569451515","Nosirbek Muxammadsharipov", "+998884548556","Xalq Bank","65699575566126236994",true, new SimpleDateFormat("dd.MM.yyyy").parse("04.15.2021"),new SimpleDateFormat("dd.MM.yyyy").parse("04.15.2026"),"UZCARD"));
+                    new PlasticCardDetailsDto("9860147565846321","Nosirbek Muxammadsharipov", "+998884548556","Xalq Bank","65699575566126236994",true, new SimpleDateFormat("dd.MM.yyyy").parse("04.15.2021"),new SimpleDateFormat("dd.MM.yyyy").parse("04.15.2026"),"UZCARD"));
             plasticCardDetailsDtoMap.put("8600752637859015",
                     new PlasticCardDetailsDto("8600752637859015","Ravshan Namozov", "+998508966587","SQB Bank","65699559595626236994",false, new SimpleDateFormat("dd.MM.yyyy").parse("14.11.2021"),new SimpleDateFormat("dd.MM.yyyy").parse("14.11.2026"),"UZCARD"));
             plasticCardDetailsDtoMap.put("8600478521455566",
@@ -53,7 +53,7 @@ public class CentralBankServices {
     public PlasticCardDetailsDto checkAndGetPlasticCard(String plasticNumber, Date dateViaParseFrom) {
 
         PlasticCardDetailsDto plasticCardDetailsDto = plasticCardDetailsDtoMap.get(plasticNumber);
-        if (plasticCardDetailsDto.getExpirationDate().compareTo(dateViaParseFrom)!=0) {
+        if (plasticCardDetailsDto!=null && plasticCardDetailsDto.getExpirationDate().compareTo(dateViaParseFrom)==0) {
             return plasticCardDetailsDto;
         }
         else {

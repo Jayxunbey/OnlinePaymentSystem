@@ -1,9 +1,11 @@
 package uz.pdp.online.onlinepayment.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uz.pdp.online.onlinepayment.common.exceptions.throwclasses.PlasticCardNotFoundException;
+import uz.pdp.online.onlinepayment.common.exceptions.throwclasses.PlasticCardPhoneNumberNotEqualException;
 import uz.pdp.online.onlinepayment.dto.betweens.PlasticCardDetailsDto;
 import uz.pdp.online.onlinepayment.dto.signup.req.PlasticCardAddReqDto;
 
@@ -35,9 +37,18 @@ public class PlasticCardService {
         }
 
 
+        String phone = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        String phoneNumber = plasticCardDetailsDto.getPhoneNumber();
+
+        if (!phoneNumber.equals(phone)) {
+            throw new PlasticCardPhoneNumberNotEqualException();
+        }
 
 
-//        if ()
+
+        System.out.println("cardPhoneNumber.equals(secPhone) = " + phoneNumber.equals(phone));
+
 
 
 
