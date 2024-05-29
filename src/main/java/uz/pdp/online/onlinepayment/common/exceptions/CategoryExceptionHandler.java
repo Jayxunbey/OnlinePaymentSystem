@@ -15,29 +15,15 @@ import java.util.Map;
 public class CategoryExceptionHandler {
 
     // Exception Handling Methods
-    @ExceptionHandler(CategoryNotFoundException.class)
+    @ExceptionHandler({CategoryNotFoundException.class})
     public ResponseEntity<Map<String, String>> handleCategoryNotFoundException(CategoryNotFoundException ex) {
         Map<String, String> errorResponse = new HashMap<>();
         errorResponse.put("error", ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
 
-    @ExceptionHandler(CategoryCreateException.class)
-    public ResponseEntity<Map<String, String>> handleCategoryCreateException(CategoryCreateException ex) {
-        Map<String, String> errorResponse = new HashMap<>();
-        errorResponse.put("error", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
-    }
-
-    @ExceptionHandler(CategoryUpdateException.class)
-    public ResponseEntity<Map<String, String>> handleCategoryUpdateException(CategoryUpdateException ex) {
-        Map<String, String> errorResponse = new HashMap<>();
-        errorResponse.put("error", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
-    }
-
-    @ExceptionHandler(CategoryDeleteException.class)
-    public ResponseEntity<Map<String, String>> handleCategoryDeleteException(CategoryDeleteException ex) {
+    @ExceptionHandler({CategoryCreateException.class, CategoryUpdateException.class, CategoryDeleteException.class})
+    public ResponseEntity<Map<String, String>> handleCategoryCreateException(RuntimeException ex) {
         Map<String, String> errorResponse = new HashMap<>();
         errorResponse.put("error", ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);

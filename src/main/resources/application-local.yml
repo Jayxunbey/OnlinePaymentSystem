@@ -15,7 +15,6 @@ spring:
       database: payment_system
       auto-index-creation: true
 
-
   liquibase:
     change-log: classpath:db/liquabases/postgres/liqchangelog.xml
 
@@ -31,11 +30,12 @@ spring:
       login-without-remember-me-expiration-time-minute: 1440
       sending-sms-code-time-minute: 3
 
-
 springdoc:
   swagger-ui:
     enabled: true
     path: /swagger-ui.html
 server:
   port: 8081
+
+
 
