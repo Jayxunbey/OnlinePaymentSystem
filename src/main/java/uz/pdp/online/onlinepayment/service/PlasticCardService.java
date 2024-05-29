@@ -14,7 +14,7 @@ import java.util.Date;
 public class PlasticCardService {
 
     private final CommonServices commonServices;
-    private CentralBankServices centralBankServices;
+    private final CentralBankServices centralBankServices;
 
     public void addPlasticCard(PlasticCardAddReqDto plasticCardAddReqDto) throws ParseException {
 
@@ -28,7 +28,7 @@ public class PlasticCardService {
 
         centralBankServices.checkAndGetPlasticCard(plasticNumber,dateViaParseFrom);
 
-        if ()
+//        if ()
 
     }
 }
