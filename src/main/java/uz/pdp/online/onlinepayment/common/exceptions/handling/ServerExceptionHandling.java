@@ -1,4 +1,4 @@
-package uz.pdp.online.onlinepayment.common.exceptions;
+package uz.pdp.online.onlinepayment.common.exceptions.handling;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

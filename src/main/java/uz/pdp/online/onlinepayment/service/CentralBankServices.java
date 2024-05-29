@@ -1,6 +1,7 @@
 package uz.pdp.online.onlinepayment.service;
 
 import org.springframework.stereotype.Service;
+import uz.pdp.online.onlinepayment.dto.betweens.PlasticCardDetailsDto;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -49,9 +50,15 @@ public class CentralBankServices {
     }
 
 
-    public void checkAndGetPlasticCard(String plasticNumber, Date dateViaParseFrom) {
+    public PlasticCardDetailsDto checkAndGetPlasticCard(String plasticNumber, Date dateViaParseFrom) {
 
-        System.out.println("plasticCardDetailsDtoMap = " + plasticCardDetailsDtoMap);
+        PlasticCardDetailsDto plasticCardDetailsDto = plasticCardDetailsDtoMap.get(plasticNumber);
+        if (plasticCardDetailsDto.getExpirationDate().compareTo(dateViaParseFrom)!=0) {
+            return plasticCardDetailsDto;
+        }
+        else {
+            return null;
+        }
 
 
     }

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;
-import uz.pdp.online.onlinepayment.common.exceptions.CategoryExceptionHandler;
+import uz.pdp.online.onlinepayment.common.exceptions.handling.CategoryExceptionHandler;
 import uz.pdp.online.onlinepayment.dto.signup.req.CategorySaveDto;
 import uz.pdp.online.onlinepayment.dto.signup.req.CategoryUpdateDto;
 import uz.pdp.online.onlinepayment.entity.inmongo.Category;

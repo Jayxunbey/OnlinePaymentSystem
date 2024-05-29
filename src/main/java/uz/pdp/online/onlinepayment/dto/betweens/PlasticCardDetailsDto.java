@@ -1,4 +1,4 @@
-package uz.pdp.online.onlinepayment.service;
+package uz.pdp.online.onlinepayment.dto.betweens;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Value;
@@ -21,4 +21,5 @@ public class PlasticCardDetailsDto implements Serializable {
     Date issuedDate;
     Date expirationDate;
     String type;
+
 }

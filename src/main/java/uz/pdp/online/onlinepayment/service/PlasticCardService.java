@@ -3,6 +3,8 @@ package uz.pdp.online.onlinepayment.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import uz.pdp.online.onlinepayment.common.exceptions.throwclasses.PlasticCardNotFoundException;
+import uz.pdp.online.onlinepayment.dto.betweens.PlasticCardDetailsDto;
 import uz.pdp.online.onlinepayment.dto.signup.req.PlasticCardAddReqDto;
 
 import java.text.ParseException;
@@ -26,9 +28,18 @@ public class PlasticCardService {
 
         Date dateViaParseFrom = commonServices.getDateViaParseFrom(expirationString, "dd/MM/yyyy");
 
-        centralBankServices.checkAndGetPlasticCard(plasticNumber,dateViaParseFrom);
+        PlasticCardDetailsDto plasticCardDetailsDto = centralBankServices.checkAndGetPlasticCard(plasticNumber, dateViaParseFrom);
+
+        if (plasticCardDetailsDto==null){
+            throw new PlasticCardNotFoundException();
+        }
+
+
+
 
 //        if ()
+
+
 
     }
 }
