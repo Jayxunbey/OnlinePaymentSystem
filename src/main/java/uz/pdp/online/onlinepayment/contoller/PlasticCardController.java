@@ -1,12 +1,21 @@
 package uz.pdp.online.onlinepayment.contoller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.annotation.*;
 import uz.pdp.online.onlinepayment.dto.signup.req.PlasticCardAddReqDto;
+import uz.pdp.online.onlinepayment.dto.signup.resp.FieldErrorArrayDtoObj;
+import uz.pdp.online.onlinepayment.dto.signup.resp.MessageRespDtoObj;
 import uz.pdp.online.onlinepayment.service.PlasticCardService;
 
 import javax.security.auth.login.AccountNotFoundException;
@@ -15,16 +24,73 @@ import java.text.ParseException;
 @RestController
 @RequestMapping("/api/plastic-card")
 @RequiredArgsConstructor
+@Tag(name = "Plastic Card", description = "To use all requests on this application you must authorize via Admin and User")
 public class PlasticCardController {
 
     private final PlasticCardService plasticCardService;
 
-    @PostMapping("/adding")
-    public String addPlasticCard(@RequestBody @Valid PlasticCardAddReqDto plasticCardAddReqDto) throws ParseException, AccountNotFoundException {
 
+    @Operation(
+            description = "To use this method you must have User Role only",
+            responses = {
+                    @ApiResponse(
+                            description = "Created",
+                            responseCode = "201",
+                            content = {
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            examples = {@ExampleObject(value = "{\n     \t\"message\":\"Added Successfully\"\n}")}
+                                    )
+                            }
+                    ),
+                    @ApiResponse(
+                            description = "Plastic card already exists",
+                            responseCode = "406",
+                            content = {
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            examples = {@ExampleObject(value = "{\n     \t\"error\":\"error message\"\n}")}
+                                    )
+                            }
+
+                    ),
+                    @ApiResponse(
+                            description = "Plastic Card not found",
+                            responseCode = "404",
+                            content = {
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            examples = {@ExampleObject(value = "{\n     \t\"error\":\"error message\"\n}")}
+                                    )
+                            }
+
+                    ),
+                    @ApiResponse(
+                            description = "Fields[] validating errors",
+                            responseCode = "406",
+                            content = {
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            schema = @Schema(implementation = FieldErrorArrayDtoObj.class)
+                                    )
+                            }
+                    )
+            }
+    )
+    @Secured("ROLE_USER")
+    @PostMapping("/adding")
+    public ResponseEntity<MessageRespDtoObj> addPlasticCard(@RequestBody @Valid PlasticCardAddReqDto plasticCardAddReqDto) throws ParseException, AccountNotFoundException {
         plasticCardService.addPlasticCard(plasticCardAddReqDto);
 
-        return null;
+        return ResponseEntity.status(HttpStatus.CREATED).body(new MessageRespDtoObj("Added successfully"));
+
+    }
+
+    @GetMapping("/all-plastic-card")
+    public void allPlasticCard() {
+
+        plasticCardService.getAllPlasticCard();
+
     }
 
 

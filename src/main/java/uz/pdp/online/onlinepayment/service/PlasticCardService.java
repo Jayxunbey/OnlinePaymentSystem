@@ -94,4 +94,10 @@ public class PlasticCardService {
     private Double getBalanceFrom(String plasticNumber) {
         return random.nextDouble(15, 10000000);
     }
+
+    public void getAllPlasticCard() {
+
+//        plasticCardRepository.findByPhoneNumber()
+
+    }
 }
