@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import uz.pdp.online.onlinepayment.dto.signup.req.PlasticCardAddReqDto;
 import uz.pdp.online.onlinepayment.service.PlasticCardService;
 
+import javax.security.auth.login.AccountNotFoundException;
 import java.text.ParseException;
 
 @RestController
@@ -19,7 +20,7 @@ public class PlasticCardController {
     private final PlasticCardService plasticCardService;
 
     @PostMapping("/adding")
-    public String addPlasticCard(@RequestBody @Valid PlasticCardAddReqDto plasticCardAddReqDto) throws ParseException {
+    public String addPlasticCard(@RequestBody @Valid PlasticCardAddReqDto plasticCardAddReqDto) throws ParseException, AccountNotFoundException {
 
         plasticCardService.addPlasticCard(plasticCardAddReqDto);
 

@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -25,6 +25,9 @@ public class PlasticCard {
     @Column(name = "bank_name", nullable = false)
     private String bankName;
 
+    @Column(name = "card_name", nullable = false)
+    private String cardName;
+
     @Column(name = "bank_account_number", nullable = false)
     private String bankAccountNumber;
 
@@ -32,10 +35,10 @@ public class PlasticCard {
     private Boolean active = false;
 
     @Column(name = "issued_date", nullable = false)
-    private LocalDate issuedDate;
+    private Date issuedDate;
 
     @Column(name = "expiration_date", nullable = false)
-    private LocalDate expirationDate;
+    private Date expirationDate;
 
     @Column(name = "type", nullable = false)
     private String type;

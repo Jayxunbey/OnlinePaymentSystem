@@ -20,7 +20,7 @@ public class PlasticCardAddReqDto implements Serializable {
 
     @NotBlank
     @NotEmpty
-    String bankName;
+    String cardName;
 
     @Pattern(regexp = "[0-9]{2}/[0-9]{2}/[0-9]{4}", message = "date must be as DD/MM/YYYY")
     String expiration;

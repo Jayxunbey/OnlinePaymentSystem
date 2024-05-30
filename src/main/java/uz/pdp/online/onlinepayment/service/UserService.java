@@ -120,4 +120,15 @@ public class UserService {
             }
         }
     }
+
+    public User getUserByPhoneNumber(String phone) throws AccountNotFoundException {
+
+        Optional<User> byPhone = userRepository.findByPhone(phone);
+        if (byPhone.isPresent()) {
+            return byPhone.get();
+        }else {
+            throw new AccountNotFoundException();
+        }
+
+    }
 }

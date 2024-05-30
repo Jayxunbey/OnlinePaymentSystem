@@ -30,8 +30,8 @@ public class CentralBankServices {
                     new PlasticCardDetailsDto("9860151542243265","Jayxunbek Muxammadov", "+998934577566","Aloqa Bank","65699556565626236994",false, new SimpleDateFormat("dd.MM.yyyy").parse("13.06.2020"),new SimpleDateFormat("dd.MM.yyyy").parse("13.06.2025"),"HUMO"));
             plasticCardDetailsDtoMap.put("9860789545652365",
                     new PlasticCardDetailsDto("9860789545652365","Umidjon Qurbonov", "+998200154886","Ravnak Bank","65645556565626236994",false, new SimpleDateFormat("dd.MM.yyyy").parse("25.09.2021"),new SimpleDateFormat("dd.MM.yyyy").parse("25.09.2026"),"HUMO"));
-            plasticCardDetailsDtoMap.put("8600457569471515",
-                    new PlasticCardDetailsDto("8600457569471515","Jayxunbek Muxammadov", "+998934577566","TBC Bank","65699556565626236994",true, new SimpleDateFormat("dd.MM.yyyy").parse("29.05.2023"),new SimpleDateFormat("dd.MM.yyyy").parse("29.05.2028"),"UZCARD"));
+            plasticCardDetailsDtoMap.put("8600456432471515",
+                    new PlasticCardDetailsDto("8600456432471515","Jayxunbek Muxammadov", "+998934577566","TBC Bank","65699556565626236994",true, new SimpleDateFormat("dd.MM.yyyy").parse("29.05.2023"),new SimpleDateFormat("dd.MM.yyyy").parse("29.05.2028"),"UZCARD"));
             plasticCardDetailsDtoMap.put("9860350154789536",
                     new PlasticCardDetailsDto("9860350154789536","Akrombek Sodiqov", "+998759956659","Agro Bank","65699556565626236994",true, new SimpleDateFormat("dd.MM.yyyy").parse("16.02.2024"),new SimpleDateFormat("dd.MM.yyyy").parse("16.02.2029"),"HUMO"));
             plasticCardDetailsDtoMap.put("8600659845874632",
@@ -50,10 +50,12 @@ public class CentralBankServices {
     }
 
 
-    public PlasticCardDetailsDto checkAndGetPlasticCard(String plasticNumber, Date dateViaParseFrom) {
+    public PlasticCardDetailsDto checkAndGetPlasticCard(String plasticNumber, Date dateViaParseFrom, String phoneNumber) {
 
         PlasticCardDetailsDto plasticCardDetailsDto = plasticCardDetailsDtoMap.get(plasticNumber);
-        if (plasticCardDetailsDto!=null && plasticCardDetailsDto.getExpirationDate().compareTo(dateViaParseFrom)==0) {
+        if (plasticCardDetailsDto!=null &&
+                plasticCardDetailsDto.getExpirationDate().compareTo(dateViaParseFrom)==0 &&
+                plasticCardDetailsDto.getActive()) {
             return plasticCardDetailsDto;
         }
         else {
