@@ -1,6 +1,7 @@
 package uz.pdp.online.onlinepayment.contoller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -13,11 +14,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
-import uz.pdp.online.onlinepayment.dto.resp.PlasticCardResponseDto;
 import uz.pdp.online.onlinepayment.dto.signup.req.PlasticCardAddReqDto;
 import uz.pdp.online.onlinepayment.dto.signup.req.PlasticCardReqUpdateDto;
 import uz.pdp.online.onlinepayment.dto.signup.resp.FieldErrorArrayDtoObj;
 import uz.pdp.online.onlinepayment.dto.signup.resp.MessageRespDtoObj;
+import uz.pdp.online.onlinepayment.dto.signup.resp.PlasticCardResponseDto;
 import uz.pdp.online.onlinepayment.service.PlasticCardService;
 
 import javax.security.auth.login.AccountNotFoundException;
@@ -89,6 +90,21 @@ public class PlasticCardController {
 
     }
 
+    @Operation(
+            description = "To use this method you must have User Role only",
+            responses = {
+                    @ApiResponse(
+                            description = "Ok",
+                            responseCode = "200",
+                            content = {
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            array = @ArraySchema(schema = @Schema(implementation = PlasticCardResponseDto.class))
+                                    )
+                            }
+                    )
+            }
+    )
     @GetMapping("/all")
     @Secured("ROLE_USER")
     public ResponseEntity<List<PlasticCardResponseDto>> allPlasticCard() {
@@ -99,13 +115,73 @@ public class PlasticCardController {
 
     }
 
-    @PutMapping("/update/name")
-    public void updatePlasticCard(@RequestBody @Valid PlasticCardReqUpdateDto plasticCardReqUpdateDto){
+    @Operation(
+            description = "To use this method you must have User Role only",
+            responses = {
+                    @ApiResponse(
+                            description = "Ok",
+                            responseCode = "201",
+                            content = {
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            schema = @Schema(implementation = PlasticCardResponseDto.class)
+                                    )
+                            }
+                    ),
+                    @ApiResponse(
+                            description = "Plastic Card not found",
+                            responseCode = "404",
+                            content = {
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            examples = {@ExampleObject(value = "{\n     \t\"error\":\"error message\"\n}")}
+                                    )
+                            }
 
-        plasticCardService.updateName(plasticCardReqUpdateDto);
+                    ),
+                    @ApiResponse(
+                            description = "Fields[] validating errors",
+                            responseCode = "406",
+                            content = {
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            schema = @Schema(implementation = FieldErrorArrayDtoObj.class)
+                                    )
+                            }
+                    )
+            }
+    )
+    @Secured("ROLE_USER")
+    @PutMapping("/update/name")
+    public ResponseEntity<PlasticCardResponseDto> updatePlasticCard(@RequestBody @Valid PlasticCardReqUpdateDto plasticCardReqUpdateDto) {
+
+        PlasticCardResponseDto plasticCardResponseDto = plasticCardService.updateName(plasticCardReqUpdateDto);
+
+        return ResponseEntity.ok().body(plasticCardResponseDto);
 
     }
 
+    @Operation(
+            description = "To use this method you must have User Role only",
+            responses = {
+                    @ApiResponse(
+                            description = "Ok",
+                            responseCode = "200",
+                            content = @Content(schema = @Schema())
+                    ),
+                    @ApiResponse(
+                            description = "Plastic Card not found",
+                            responseCode = "404",
+                            content = {
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            examples = {@ExampleObject(value = "{\n     \t\"error\":\"error message\"\n}")}
+                                    )
+                            }
+
+                    )
+            }
+    )
     @Secured("ROLE_USER")
     @DeleteMapping("/delete/{number}")
     public void deletePlasticCard(@PathVariable("number") String number) {

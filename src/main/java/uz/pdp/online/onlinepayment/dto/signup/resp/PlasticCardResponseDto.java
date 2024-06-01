@@ -1,4 +1,4 @@
-package uz.pdp.online.onlinepayment.dto.resp;
+package uz.pdp.online.onlinepayment.dto.signup.resp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
