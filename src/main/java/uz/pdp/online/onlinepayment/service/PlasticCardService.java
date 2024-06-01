@@ -39,26 +39,37 @@ public class PlasticCardService {
 
         String plasticNumber = plasticCardAddReqDto.getNumber();
 
-        checkPlasticThrough(plasticNumber);
+        String securityPhone = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        PlasticCard checkPlasticCard = checkPlasticThrough(plasticNumber, securityPhone);
+
+        if (checkPlasticCard !=null) {
+            if (checkPlasticCard.getActive()) {
+                throw new PlasticCardAlreadyExistException();
+            }else {
+                checkPlasticCard.setActive(true);
+                plasticCardRepository.save(checkPlasticCard);
+                return;
+            }
+        }
 
         Date dateViaParseFrom = commonServices.getDateViaParseFrom(expirationString, "dd/MM/yyyy");
 
-        String phone = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 
-        PlasticCardDetailsDto plasticCardDetailsDto = centralBankServices.checkAndGetPlasticCard(plasticNumber, dateViaParseFrom, phone);
+        PlasticCardDetailsDto plasticCardDetailsDto = centralBankServices.checkAndGetPlasticCard(plasticNumber, dateViaParseFrom, securityPhone);
 
         if (plasticCardDetailsDto == null) {
             throw new PlasticCardNotFoundException();
         }
 
-        if (!plasticCardDetailsDto.getPhoneNumber().equals(phone)){
+        if (!plasticCardDetailsDto.getPhoneNumber().equals(securityPhone)){
             throw new PlasticCardPhoneNumberNotEqualException();
         }
 
         // Plastic card mavjud va amallar bajarish mumkin
 
-        User user = userService.getUserByPhoneNumber(phone);
+        User user = userService.getUserByPhoneNumber(securityPhone);
 
         PlasticCard entity = getAsEntityFrom(plasticCardDetailsDto, user,cardName);
 
@@ -68,11 +79,9 @@ public class PlasticCardService {
 
     }
 
-    private void checkPlasticThrough(String plasticNumber) {
-        Optional<PlasticCard> byNumber = plasticCardRepository.findByNumber(plasticNumber);
-        if (byNumber.isPresent()) {
-            throw new PlasticCardAlreadyExistException();
-        }
+    private PlasticCard checkPlasticThrough(String plasticNumber, String phone) {
+        Optional<PlasticCard> byNumber = plasticCardRepository.findByNumberAndPhoneNumber(plasticNumber,phone);
+        return byNumber.orElse(null);
     }
 
     private PlasticCard getAsEntityFrom(PlasticCardDetailsDto plasticCardDetailsDto, User user, String cardName) {
