@@ -43,10 +43,10 @@ public class PlasticCardService {
 
         PlasticCard checkPlasticCard = checkPlasticThrough(plasticNumber, securityPhone);
 
-        if (checkPlasticCard !=null) {
+        if (checkPlasticCard != null) {
             if (checkPlasticCard.getActive()) {
                 throw new PlasticCardAlreadyExistException();
-            }else {
+            } else {
                 checkPlasticCard.setActive(true);
                 plasticCardRepository.save(checkPlasticCard);
                 return;
@@ -56,14 +56,13 @@ public class PlasticCardService {
         Date dateViaParseFrom = commonServices.getDateViaParseFrom(expirationString, "dd/MM/yyyy");
 
 
-
         PlasticCardDetailsDto plasticCardDetailsDto = centralBankServices.checkAndGetPlasticCard(plasticNumber, dateViaParseFrom, securityPhone);
 
         if (plasticCardDetailsDto == null) {
             throw new PlasticCardNotFoundException();
         }
 
-        if (!plasticCardDetailsDto.getPhoneNumber().equals(securityPhone)){
+        if (!plasticCardDetailsDto.getPhoneNumber().equals(securityPhone)) {
             throw new PlasticCardPhoneNumberNotEqualException();
         }
 
@@ -71,7 +70,7 @@ public class PlasticCardService {
 
         User user = userService.getUserByPhoneNumber(securityPhone);
 
-        PlasticCard entity = getAsEntityFrom(plasticCardDetailsDto, user,cardName);
+        PlasticCard entity = getAsEntityFrom(plasticCardDetailsDto, user, cardName);
 
         entity.setActive(true);
         plasticCardRepository.save(entity);
@@ -80,7 +79,7 @@ public class PlasticCardService {
     }
 
     private PlasticCard checkPlasticThrough(String plasticNumber, String phone) {
-        Optional<PlasticCard> byNumber = plasticCardRepository.findByNumberAndPhoneNumber(plasticNumber,phone);
+        Optional<PlasticCard> byNumber = plasticCardRepository.findByNumberAndPhoneNumber(plasticNumber, phone);
         return byNumber.orElse(null);
     }
 
