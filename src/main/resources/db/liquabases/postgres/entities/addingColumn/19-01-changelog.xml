@@ -25,4 +25,10 @@
             </column>
         </addColumn>
     </changeSet>
+    <changeSet id="1717249733164-1" author="jayxunbey">
+        <addColumn tableName="plastic_card">
+            <column name="status" type="VARCHAR(255)"/>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>

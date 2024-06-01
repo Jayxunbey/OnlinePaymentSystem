@@ -13,13 +13,16 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
+import uz.pdp.online.onlinepayment.dto.resp.PlasticCardResponseDto;
 import uz.pdp.online.onlinepayment.dto.signup.req.PlasticCardAddReqDto;
+import uz.pdp.online.onlinepayment.dto.signup.req.PlasticCardReqUpdateDto;
 import uz.pdp.online.onlinepayment.dto.signup.resp.FieldErrorArrayDtoObj;
 import uz.pdp.online.onlinepayment.dto.signup.resp.MessageRespDtoObj;
 import uz.pdp.online.onlinepayment.service.PlasticCardService;
 
 import javax.security.auth.login.AccountNotFoundException;
 import java.text.ParseException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/plastic-card")
@@ -86,12 +89,29 @@ public class PlasticCardController {
 
     }
 
-    @GetMapping("/all-plastic-card")
-    public void allPlasticCard() {
+    @GetMapping("/all")
+    @Secured("ROLE_USER")
+    public ResponseEntity<List<PlasticCardResponseDto>> allPlasticCard() {
 
-        plasticCardService.getAllPlasticCard();
+        List<PlasticCardResponseDto> allPlasticCard = plasticCardService.getAllPlasticCardForResp();
+
+        return ResponseEntity.ok(allPlasticCard);
 
     }
 
+    @PutMapping("/update/name")
+    public void updatePlasticCard(@RequestBody @Valid PlasticCardReqUpdateDto plasticCardReqUpdateDto){
+
+        plasticCardService.updateName(plasticCardReqUpdateDto);
+
+    }
+
+    @Secured("ROLE_USER")
+    @DeleteMapping("/delete/{number}")
+    public void deletePlasticCard(@PathVariable("number") String number) {
+
+        plasticCardService.deleteCard(number);
+
+    }
 
 }

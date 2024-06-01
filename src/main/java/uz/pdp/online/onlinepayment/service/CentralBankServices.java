@@ -54,8 +54,7 @@ public class CentralBankServices {
 
         PlasticCardDetailsDto plasticCardDetailsDto = plasticCardDetailsDtoMap.get(plasticNumber);
         if (plasticCardDetailsDto!=null &&
-                plasticCardDetailsDto.getExpirationDate().compareTo(dateViaParseFrom)==0 &&
-                plasticCardDetailsDto.getActive()) {
+                plasticCardDetailsDto.getExpirationDate().compareTo(dateViaParseFrom)==0) {
             return plasticCardDetailsDto;
         }
         else {

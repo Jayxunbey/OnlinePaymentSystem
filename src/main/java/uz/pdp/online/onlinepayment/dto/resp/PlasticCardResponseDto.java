@@ -25,10 +25,6 @@ public class PlasticCardResponseDto implements Serializable {
     @JsonProperty("card_name")
     String cardName;
 
-    @JsonProperty("bank_account_number")
-    String bankAccountNumber;
-    Boolean active;
-
     @JsonProperty("expiration_date")
     String expirationDate;
 

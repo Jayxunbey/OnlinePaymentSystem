@@ -40,6 +40,8 @@ public class PlasticCard {
     @Column(name = "expiration_date", nullable = false)
     private Date expirationDate;
 
+    private String status;
+
     @Column(name = "type", nullable = false)
     private String type;
 

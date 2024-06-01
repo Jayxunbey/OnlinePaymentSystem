@@ -8,16 +8,17 @@ import uz.pdp.online.onlinepayment.common.exceptions.throwclasses.plasticcard.Pl
 import uz.pdp.online.onlinepayment.common.exceptions.throwclasses.plasticcard.PlasticCardNotFoundException;
 import uz.pdp.online.onlinepayment.common.exceptions.throwclasses.plasticcard.PlasticCardPhoneNumberNotEqualException;
 import uz.pdp.online.onlinepayment.dto.betweens.PlasticCardDetailsDto;
+import uz.pdp.online.onlinepayment.dto.resp.PlasticCardResponseDto;
 import uz.pdp.online.onlinepayment.dto.signup.req.PlasticCardAddReqDto;
+import uz.pdp.online.onlinepayment.dto.signup.req.PlasticCardReqUpdateDto;
 import uz.pdp.online.onlinepayment.entity.inpostgres.PlasticCard;
 import uz.pdp.online.onlinepayment.entity.inpostgres.User;
 import uz.pdp.online.onlinepayment.repo.inpostgres.PlasticCardRepository;
 
 import javax.security.auth.login.AccountNotFoundException;
 import java.text.ParseException;
-import java.util.Date;
-import java.util.Optional;
-import java.util.Random;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 @Transactional
@@ -61,6 +62,7 @@ public class PlasticCardService {
 
         PlasticCard entity = getAsEntityFrom(plasticCardDetailsDto, user,cardName);
 
+        entity.setActive(true);
         plasticCardRepository.save(entity);
 
 
@@ -95,9 +97,64 @@ public class PlasticCardService {
         return random.nextDouble(15, 10000000);
     }
 
-    public void getAllPlasticCard() {
+    public List<PlasticCardResponseDto> getAllPlasticCardForResp() {
 
-//        plasticCardRepository.findByPhoneNumber()
+        List<PlasticCardResponseDto> plasticCardResponseDtos = new ArrayList<>();
+
+        String phone = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        List<PlasticCard> plasticCards = plasticCardRepository.findByPhoneNumberAndActiveTrue(phone);
+
+        plasticCards.forEach(eachPlasticCard -> {
+            plasticCardResponseDtos.add(new PlasticCardResponseDto(
+                    eachPlasticCard.getNumber(),
+                    eachPlasticCard.getOwnerName(),
+                    eachPlasticCard.getBankName(),
+                    eachPlasticCard.getCardName(),
+                    new SimpleDateFormat("MM/yyyy").format(eachPlasticCard.getExpirationDate()),
+                    eachPlasticCard.getType(),
+                    eachPlasticCard.getBalance()
+            ));
+        });
+
+        return plasticCardResponseDtos;
+
+    }
+
+
+    public void deleteCard(String number) {
+
+        String phoneNumber = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        Optional<PlasticCard> plasticCardOptional = plasticCardRepository.findByNumberAndPhoneNumber(number, phoneNumber);
+
+        if (plasticCardOptional.isPresent()) {
+            PlasticCard plasticCard = plasticCardOptional.get();
+            if (plasticCard.getActive()) {
+                plasticCard.setActive(false);
+                plasticCardRepository.save(plasticCard);
+                return;
+            }
+        }
+
+        throw new PlasticCardNotFoundException();
+
+    }
+
+    public void updateName(PlasticCardReqUpdateDto plasticCardReqUpdateDto) {
+
+        String phone = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        Optional<PlasticCard> byNumberAndPhoneNumber = plasticCardRepository.findByNumberAndPhoneNumber(plasticCardReqUpdateDto.getNumber(), phone);
+
+        if (byNumberAndPhoneNumber.isPresent()) {
+            PlasticCard plasticCard = byNumberAndPhoneNumber.get();
+            plasticCard.setCardName(plasticCardReqUpdateDto.getCardName());
+            plasticCardRepository.save(plasticCard);
+            return;
+        }
+
+        throw new PlasticCardNotFoundException();
 
     }
 }

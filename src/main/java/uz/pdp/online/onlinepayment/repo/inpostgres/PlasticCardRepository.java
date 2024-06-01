@@ -10,5 +10,7 @@ public interface PlasticCardRepository extends JpaRepository<PlasticCard, String
 
     Optional<PlasticCard> findByNumber(String number);
 
-    List<PlasticCard> findByPhoneNumber(String phoneNumber);
+    List<PlasticCard> findByPhoneNumberAndActiveTrue(String phoneNumber);
+
+    Optional<PlasticCard> findByNumberAndPhoneNumber(String number, String phoneNumber);
 }
