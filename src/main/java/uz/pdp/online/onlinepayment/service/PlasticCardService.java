@@ -55,7 +55,6 @@ public class PlasticCardService {
 
         Date dateViaParseFrom = commonServices.getDateViaParseFrom(expirationString, "dd/MM/yyyy");
 
-
         PlasticCardDetailsDto plasticCardDetailsDto = centralBankServices.checkAndGetPlasticCard(plasticNumber, dateViaParseFrom, securityPhone);
 
         if (plasticCardDetailsDto == null) {
@@ -120,7 +119,6 @@ public class PlasticCardService {
         return plasticCardResponseDtos;
 
     }
-
 
     public void deleteCard(String number) {
 
