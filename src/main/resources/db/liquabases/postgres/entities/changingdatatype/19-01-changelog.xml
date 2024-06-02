@@ -14,7 +14,12 @@
     <changeSet id="1716115654359-1" author="jayxunbey">
         <addPrimaryKey tableName="registiration_temp_sent_code" columnNames="token"/>
     </changeSet>
-
+    <changeSet id="1717050277047-1" author="jayxunbey">
+        <modifyDataType tableName="plastic_card" columnName="issued_date" newDataType="datetime"/>
+    </changeSet>
+    <changeSet id="1717050319891-1" author="jayxunbey">
+        <modifyDataType tableName="plastic_card" columnName="expiration_date" newDataType="datetime"/>
+    </changeSet>
 
 
 </databaseChangeLog>

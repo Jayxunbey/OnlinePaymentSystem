@@ -20,7 +20,7 @@ import uz.pdp.online.onlinepayment.dto.signup.req.UserLoginDto;
 import uz.pdp.online.onlinepayment.dto.signup.req.UserSignUpConfirmDto;
 import uz.pdp.online.onlinepayment.dto.signup.req.UserSignUpDto;
 import uz.pdp.online.onlinepayment.dto.signup.resp.FieldErrorArrayDtoObj;
-import uz.pdp.online.onlinepayment.dto.signup.resp.MessageDtoObj;
+import uz.pdp.online.onlinepayment.dto.signup.resp.MessageRespDtoObj;
 import uz.pdp.online.onlinepayment.dto.signup.resp.RegistirationTempSentCodeRespDto;
 import uz.pdp.online.onlinepayment.service.AuthService;
 
@@ -111,12 +111,12 @@ public class AuthController {
     )
 
     @PostMapping("/sign-up-confirm")
-    public ResponseEntity<MessageDtoObj> signUpConfirm(@RequestBody @Valid UserSignUpConfirmDto signUpConfirmDto) throws AccountException {
+    public ResponseEntity<MessageRespDtoObj> signUpConfirm(@RequestBody @Valid UserSignUpConfirmDto signUpConfirmDto) throws AccountException {
         String authToken = authService.confirm(signUpConfirmDto);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .header(HttpHeaders.AUTHORIZATION, authToken)
-                .body(new MessageDtoObj("Successfully created"));
+                .body(new MessageRespDtoObj("Successfully created"));
     }
 
     @Operation(
@@ -155,13 +155,13 @@ public class AuthController {
             }
     )
     @PostMapping("/login")
-    public ResponseEntity<MessageDtoObj> login(@RequestBody @Valid UserLoginDto userLoginDto) throws AccountNotFoundException {
+    public ResponseEntity<MessageRespDtoObj> login(@RequestBody @Valid UserLoginDto userLoginDto) throws AccountNotFoundException {
 
         String authToken = authService.login(userLoginDto);
 
         return ResponseEntity
                 .accepted()
                 .header(HttpHeaders.AUTHORIZATION, authToken)
-                .body(new MessageDtoObj("Logged Successfully"));
+                .body(new MessageRespDtoObj("Logged Successfully"));
     }
 }

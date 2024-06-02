@@ -18,4 +18,17 @@
             </column>
         </addColumn>
     </changeSet>
+    <changeSet id="1717064168289-1" author="jayxunbey">
+        <addColumn tableName="plastic_card">
+            <column name="card_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="1717249733164-1" author="jayxunbey">
+        <addColumn tableName="plastic_card">
+            <column name="status" type="VARCHAR(255)"/>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>
