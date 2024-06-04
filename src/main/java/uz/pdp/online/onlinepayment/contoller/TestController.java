@@ -27,7 +27,7 @@ public class TestController {
         Service build = Service.builder().active(true)
                 .categoryId("5").name("PDP Academy").
                 requestAddress("https://click.uz/api/pay/")
-                .number("4489449465465").fee(864654.55)
+                .number(null).fee(null)
                 .fields(new Field[]{Field.builder()
                         .name("invoice_number").type("text")
                         .required(true).build(), Field.builder()

@@ -13,4 +13,6 @@ public interface CategoryRepository extends MongoRepository<Category, Integer> {
     long countById(String id);
 
     Category findByNumber(String number);
+
+    boolean existsByNumber(String number);
 }
