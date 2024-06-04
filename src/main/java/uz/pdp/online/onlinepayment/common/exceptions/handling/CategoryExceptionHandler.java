@@ -45,8 +45,8 @@ public class CategoryExceptionHandler {
 
     // Custom Exception Classes
     public static class CategoryNotFoundException extends RuntimeException {
-        public CategoryNotFoundException(String message) {
-            super(message);
+        public CategoryNotFoundException(String number) {
+            super("Category with number " + number + " not found");
         }
     }
 

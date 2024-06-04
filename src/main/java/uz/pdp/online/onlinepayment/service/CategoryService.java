@@ -58,7 +58,7 @@ public class CategoryService {
         try {
             Category category = categoryRepository.findByNumber(number);
             if (category == null) {
-                throw new CategoryExceptionHandler.CategoryNotFoundException("Category with number " + number + " not found");
+                throw new CategoryExceptionHandler.CategoryNotFoundException(number);
             }
             category.setName(categoryUpdateDto.getName());
             category.setType(categoryUpdateDto.getType());
@@ -77,12 +77,16 @@ public class CategoryService {
         try {
             Category category = categoryRepository.findByNumber(number);
             if (category == null) {
-                throw new CategoryExceptionHandler.CategoryNotFoundException("Category with number " + number + " not found");
+                throw new CategoryExceptionHandler.CategoryNotFoundException(number);
             }
             category.setActive(false);
             categoryRepository.save(category);
         } catch (Exception ex) {
             throw new CategoryExceptionHandler.CategoryDeleteException("Failed to delete category: " + ex.getMessage());
         }
+    }
+
+    public boolean existsByNumber(String categoryId) {
+        return categoryRepository.existsByNumber(categoryId);
     }
 }

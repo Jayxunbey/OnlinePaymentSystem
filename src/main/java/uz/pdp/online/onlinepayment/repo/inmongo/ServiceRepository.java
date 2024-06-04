@@ -5,4 +5,5 @@ import uz.pdp.online.onlinepayment.entity.inmongo.Service;
 
 public interface ServiceRepository extends MongoRepository<Service, String> {
 
+    long countById(String id);
 }

@@ -5,6 +5,8 @@ import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.math.BigDecimal;
+
 @Document
 @Getter
 @Setter
@@ -22,19 +24,17 @@ public class Service {
 
     private String categoryId;
 
-    private String number;
+    private Integer number;
 
     @Field(name = "request_address")
     private String requestAddress;
 
     private uz.pdp.online.onlinepayment.entity.inmongo.Field[] fields;
 
-    private Double fee;
+    private BigDecimal fee;
 
-    private Double cashback;
+    private BigDecimal cashback;
 
     private boolean active;
-
-    private boolean available;
 
 }
