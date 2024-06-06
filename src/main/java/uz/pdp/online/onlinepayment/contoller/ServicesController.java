@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/services")
 @RequiredArgsConstructor
+@Tag(name = "Service Controller", description = "To use all requests on this application you must authorize via Admin and User")
 public class ServicesController {
 
     private final ServicesService servicesService;
@@ -189,7 +191,31 @@ public class ServicesController {
                             content = {
                                     @Content(
                                             mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                            array = @ArraySchema(arraySchema = @Schema(implementation = ServiceRespForAllDto.class))
+                                            array = @ArraySchema(schema = @Schema(implementation = ServiceRespForAllDto.class))
+                                    )
+                            }
+                    )
+            }
+    )
+    @GetMapping("/category-number/{number}")
+    public ResponseEntity<List<ServiceRespForAllDto>> getServicesByCategory(@PathVariable String number) {
+
+        List<ServiceRespForAllDto> allByCategoryNumber = servicesService.getAllByCategoryNumberAndActiveTrue(number);
+
+        return ResponseEntity.ok().body(allByCategoryNumber);
+    }
+
+    @Operation(
+            tags = "Authentication",
+            description = "Sign up confirmation place",
+            responses = {
+                    @ApiResponse(
+                            description = "Lists",
+                            responseCode = "200",
+                            content = {
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            array = @ArraySchema(schema = @Schema(implementation = ServiceRespForAllDto.class))
                                     )
                             }
                     )
@@ -204,19 +230,37 @@ public class ServicesController {
 
     }
 
+
+    @Operation(
+            tags = "Authentication",
+            description = "Sign up confirmation place",
+            responses = {
+                    @ApiResponse(
+                            description = "Ok",
+                            responseCode = "200",
+                            content = {
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE
+                                    )
+                            }
+                    ),
+                    @ApiResponse(
+                            description = "Not Found",
+                            responseCode = "404",
+                            content = {
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            examples = {@ExampleObject(value = "{\n     \t\"error\":\"Category not found\"\n}")}
+                                    )
+                            }
+                    )
+            }
+    )
     @DeleteMapping("/delete/number/{number}")
     public void deleteService(@PathVariable String number) {
 
         servicesService.deleteService(number);
 
-    }
-
-    @GetMapping("/category-number/{number}")
-    public ResponseEntity<List<Service>> getServicesByCategory(@PathVariable String number) {
-
-        List<Service> allByCategoryNumber = servicesService.getAllByCategoryNumberAndActiveTrue(number);
-
-        return ResponseEntity.ok().body(allByCategoryNumber);
     }
 
 }

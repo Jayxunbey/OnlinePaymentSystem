@@ -8,7 +8,6 @@ import uz.pdp.online.onlinepayment.common.exceptions.handling.CategoryExceptionH
 import uz.pdp.online.onlinepayment.common.exceptions.throwclasses.services.FieldsDataEmptyException;
 import uz.pdp.online.onlinepayment.common.exceptions.throwclasses.services.ServiceNotFoundException;
 import uz.pdp.online.onlinepayment.dto.services.req.ChangeActiveReqDto;
-import uz.pdp.online.onlinepayment.dto.services.resp.ServiceRespDto;
 import uz.pdp.online.onlinepayment.dto.services.resp.ServiceRespForAllDto;
 import uz.pdp.online.onlinepayment.dto.signup.req.ServicesAddingReqDto;
 import uz.pdp.online.onlinepayment.dto.signup.req.ServicesUpdateReqDto;
@@ -101,19 +100,18 @@ public class ServicesService {
         return Integer.valueOf(String.valueOf(521000 + count));
     }
 
-    public List<uz.pdp.online.onlinepayment.entity.inmongo.Service> getAllByCategoryNumberAndActiveTrue(String categoryNumber) {
-        return serviceRepository.findByCategoryIdAndActiveTrue(categoryNumber);
-    }
+    public List<ServiceRespForAllDto> getAllByCategoryNumberAndActiveTrue(String categoryNumber) {
+        List<uz.pdp.online.onlinepayment.entity.inmongo.Service> services = serviceRepository.findByCategoryIdAndActiveTrue(categoryNumber);
 
-    public void changeActive(ChangeActiveReqDto changeActiveReqDto) {
+        List<ServiceRespForAllDto> serviceRespDtos = new ArrayList<>();
 
-        var serviceOptional = serviceRepository.findByNumber(Integer.valueOf(changeActiveReqDto.getNumber()));
-        if (serviceOptional.isEmpty()) {
-            throw new ServiceNotFoundException();
-        }
-        var service = serviceOptional.get();
-        service.setActive(changeActiveReqDto.isActive());
-        serviceRepository.save(service);
+        services.forEach(
+                service -> {
+                    serviceRespDtos.add(serviceMapper.toDto(service));
+                }
+        );
+
+        return serviceRespDtos;
 
     }
 
@@ -131,6 +129,17 @@ public class ServicesService {
         return serviceRespDtos;
     }
 
+    public void changeActive(ChangeActiveReqDto changeActiveReqDto) {
+
+        var serviceOptional = serviceRepository.findByNumber(Integer.valueOf(changeActiveReqDto.getNumber()));
+        if (serviceOptional.isEmpty()) {
+            throw new ServiceNotFoundException();
+        }
+        var service = serviceOptional.get();
+        service.setActive(changeActiveReqDto.isActive());
+        serviceRepository.save(service);
+
+    }
 
 
     public void deleteService(String number) {
