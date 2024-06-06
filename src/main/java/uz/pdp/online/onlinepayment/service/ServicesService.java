@@ -8,11 +8,15 @@ import uz.pdp.online.onlinepayment.common.exceptions.handling.CategoryExceptionH
 import uz.pdp.online.onlinepayment.common.exceptions.throwclasses.services.FieldsDataEmptyException;
 import uz.pdp.online.onlinepayment.common.exceptions.throwclasses.services.ServiceNotFoundException;
 import uz.pdp.online.onlinepayment.dto.services.req.ChangeActiveReqDto;
+import uz.pdp.online.onlinepayment.dto.services.resp.ServiceRespDto;
+import uz.pdp.online.onlinepayment.dto.services.resp.ServiceRespForAllDto;
 import uz.pdp.online.onlinepayment.dto.signup.req.ServicesAddingReqDto;
 import uz.pdp.online.onlinepayment.dto.signup.req.ServicesUpdateReqDto;
 import uz.pdp.online.onlinepayment.entity.inmongo.Field;
+import uz.pdp.online.onlinepayment.mapper.ServiceMapper;
 import uz.pdp.online.onlinepayment.repo.inmongo.ServiceRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -23,6 +27,7 @@ public class ServicesService {
 
     private final CategoryService categoryService;
     private final ServiceRepository serviceRepository;
+    private final ServiceMapper serviceMapper;
 
     public void adding(ServicesAddingReqDto servicesAddingReqDto) {
         checkViaReqruments(servicesAddingReqDto);
@@ -112,8 +117,31 @@ public class ServicesService {
 
     }
 
-    public List<uz.pdp.online.onlinepayment.entity.inmongo.Service> getAllByCategoryNumberAll(String number) {
-        return serviceRepository.findByCategoryId(number);
+    public List<ServiceRespForAllDto> getAllByCategoryNumberAll(String number) {
+        List<uz.pdp.online.onlinepayment.entity.inmongo.Service> services = serviceRepository.findByCategoryId(number);
+
+        List<ServiceRespForAllDto> serviceRespDtos = new ArrayList<>();
+
+        services.forEach(
+                service -> {
+                    serviceRespDtos.add(serviceMapper.toDto(service));
+                }
+        );
+
+        return serviceRespDtos;
+    }
+
+    private ServiceRespDto getAsResponseDtoFrom(uz.pdp.online.onlinepayment.entity.inmongo.Service service) {
+        return new ServiceRespDto(
+                service.getName(),
+                service.getCategoryId(),
+                service.getNumber(),
+                service.getRequestAddress(),
+                service.getFields(),
+                service.getFee(),
+                service.getCashback(),
+                service.isActive()
+        );
     }
 
     public void deleteService(String number) {
