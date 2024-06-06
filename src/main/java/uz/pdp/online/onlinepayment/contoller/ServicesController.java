@@ -14,13 +14,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.online.onlinepayment.dto.services.req.ChangeActiveReqDto;
-import uz.pdp.online.onlinepayment.dto.services.resp.ServiceRespDto;
 import uz.pdp.online.onlinepayment.dto.services.resp.ServiceRespForAllDto;
 import uz.pdp.online.onlinepayment.dto.signup.req.ServicesAddingReqDto;
 import uz.pdp.online.onlinepayment.dto.signup.req.ServicesUpdateReqDto;
 import uz.pdp.online.onlinepayment.dto.signup.resp.FieldErrorArrayDtoObj;
 import uz.pdp.online.onlinepayment.dto.signup.resp.MessageRespDtoObj;
-import uz.pdp.online.onlinepayment.entity.inmongo.Service;
 import uz.pdp.online.onlinepayment.service.ServicesService;
 
 import java.util.List;
