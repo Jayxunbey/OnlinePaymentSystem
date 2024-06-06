@@ -189,7 +189,7 @@ public class ServicesController {
                             content = {
                                     @Content(
                                             mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                            array = @ArraySchema(arraySchema = @Schema(implementation = ServiceRespDto.class))
+                                            array = @ArraySchema(arraySchema = @Schema(implementation = ServiceRespForAllDto.class))
                                     )
                             }
                     )

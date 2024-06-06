@@ -131,18 +131,7 @@ public class ServicesService {
         return serviceRespDtos;
     }
 
-    private ServiceRespDto getAsResponseDtoFrom(uz.pdp.online.onlinepayment.entity.inmongo.Service service) {
-        return new ServiceRespDto(
-                service.getName(),
-                service.getCategoryId(),
-                service.getNumber(),
-                service.getRequestAddress(),
-                service.getFields(),
-                service.getFee(),
-                service.getCashback(),
-                service.isActive()
-        );
-    }
+
 
     public void deleteService(String number) {
         var entityOptional = serviceRepository.findByNumber(Integer.valueOf(number));
