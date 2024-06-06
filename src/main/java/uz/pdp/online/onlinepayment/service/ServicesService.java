@@ -8,11 +8,14 @@ import uz.pdp.online.onlinepayment.common.exceptions.handling.CategoryExceptionH
 import uz.pdp.online.onlinepayment.common.exceptions.throwclasses.services.FieldsDataEmptyException;
 import uz.pdp.online.onlinepayment.common.exceptions.throwclasses.services.ServiceNotFoundException;
 import uz.pdp.online.onlinepayment.dto.services.req.ChangeActiveReqDto;
+import uz.pdp.online.onlinepayment.dto.services.resp.ServiceRespForAllDto;
 import uz.pdp.online.onlinepayment.dto.signup.req.ServicesAddingReqDto;
 import uz.pdp.online.onlinepayment.dto.signup.req.ServicesUpdateReqDto;
 import uz.pdp.online.onlinepayment.entity.inmongo.Field;
+import uz.pdp.online.onlinepayment.mapper.ServiceMapper;
 import uz.pdp.online.onlinepayment.repo.inmongo.ServiceRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -23,6 +26,7 @@ public class ServicesService {
 
     private final CategoryService categoryService;
     private final ServiceRepository serviceRepository;
+    private final ServiceMapper serviceMapper;
 
     public void adding(ServicesAddingReqDto servicesAddingReqDto) {
         checkViaReqruments(servicesAddingReqDto);
@@ -96,8 +100,33 @@ public class ServicesService {
         return Integer.valueOf(String.valueOf(521000 + count));
     }
 
-    public List<uz.pdp.online.onlinepayment.entity.inmongo.Service> getAllByCategoryNumberAndActiveTrue(String categoryNumber) {
-        return serviceRepository.findByCategoryIdAndActiveTrue(categoryNumber);
+    public List<ServiceRespForAllDto> getAllByCategoryNumberAndActiveTrue(String categoryNumber) {
+        List<uz.pdp.online.onlinepayment.entity.inmongo.Service> services = serviceRepository.findByCategoryIdAndActiveTrue(categoryNumber);
+
+        List<ServiceRespForAllDto> serviceRespDtos = new ArrayList<>();
+
+        services.forEach(
+                service -> {
+                    serviceRespDtos.add(serviceMapper.toDto(service));
+                }
+        );
+
+        return serviceRespDtos;
+
+    }
+
+    public List<ServiceRespForAllDto> getAllByCategoryNumberAll(String number) {
+        List<uz.pdp.online.onlinepayment.entity.inmongo.Service> services = serviceRepository.findByCategoryId(number);
+
+        List<ServiceRespForAllDto> serviceRespDtos = new ArrayList<>();
+
+        services.forEach(
+                service -> {
+                    serviceRespDtos.add(serviceMapper.toDto(service));
+                }
+        );
+
+        return serviceRespDtos;
     }
 
     public void changeActive(ChangeActiveReqDto changeActiveReqDto) {
@@ -112,9 +141,6 @@ public class ServicesService {
 
     }
 
-    public List<uz.pdp.online.onlinepayment.entity.inmongo.Service> getAllByCategoryNumberAll(String number) {
-        return serviceRepository.findByCategoryId(number);
-    }
 
     public void deleteService(String number) {
         var entityOptional = serviceRepository.findByNumber(Integer.valueOf(number));

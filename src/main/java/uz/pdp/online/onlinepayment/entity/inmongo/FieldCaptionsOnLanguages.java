@@ -6,5 +6,4 @@ import lombok.Value;
 public class FieldCaptionsOnLanguages {
     String lang;
     String caption;
-
 }
