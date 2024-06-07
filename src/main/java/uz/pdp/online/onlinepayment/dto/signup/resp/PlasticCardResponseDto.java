@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Value;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * DTO for {@link uz.pdp.online.onlinepayment.entity.inpostgres.PlasticCard}
@@ -30,5 +31,5 @@ public class PlasticCardResponseDto implements Serializable {
 
     String type;
 
-    Double balance;
+    BigDecimal balance;
 }

@@ -16,6 +16,7 @@ import uz.pdp.online.onlinepayment.entity.inpostgres.User;
 import uz.pdp.online.onlinepayment.repo.inpostgres.PlasticCardRepository;
 
 import javax.security.auth.login.AccountNotFoundException;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -94,7 +95,7 @@ public class PlasticCardService {
         plasticCard.setIssuedDate(plasticCardDetailsDto.getIssuedDate());
         plasticCard.setExpirationDate(plasticCardDetailsDto.getExpirationDate());
         plasticCard.setType(plasticCardDetailsDto.getType());
-        plasticCard.setBalance(getBalanceFrom(plasticCardDetailsDto.getNumber()));
+        plasticCard.setBalance(plasticCardDetailsDto.getBalance());
         plasticCard.setBankName(plasticCardDetailsDto.getBankName());
         plasticCard.setCardName(cardName);
         return plasticCard;
