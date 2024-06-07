@@ -28,7 +28,7 @@ public class TransferService {
 
         PlasticCard plasticCard = optionalPlasticCard.get();
 
-        plasticCardIsBelogsToCurrentlyUser(transferReqWithoutConfirmationDto.getFrom(), plasticCard);
+        plasticCardIsBelongsToCurrentlyUser(transferReqWithoutConfirmationDto.getFrom(), plasticCard);
 
         openAndTransaction(plasticCard, transferReqWithoutConfirmationDto.getTo(), transferReqWithoutConfirmationDto.getAmount());
 
@@ -39,7 +39,7 @@ public class TransferService {
 
     }
 
-    private void plasticCardIsBelogsToCurrentlyUser(String from, PlasticCard plasticCard) {
+    private void plasticCardIsBelongsToCurrentlyUser(String from, PlasticCard plasticCard) {
 
         String phone = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
