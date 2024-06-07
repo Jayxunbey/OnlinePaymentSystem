@@ -228,7 +228,6 @@ public class ServicesController {
 
     }
 
-
     @Operation(
             tags = "Authentication",
             description = "Sign up confirmation place",

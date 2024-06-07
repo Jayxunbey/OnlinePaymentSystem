@@ -168,4 +168,8 @@ public class PlasticCardService {
                 saved.getBalance()
         );
     }
+
+    public Optional<PlasticCard> getPlasticCardViaNumber(String from) {
+        return plasticCardRepository.findByNumber(from);
+    }
 }
