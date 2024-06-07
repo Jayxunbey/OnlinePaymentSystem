@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import uz.pdp.online.onlinepayment.common.exceptions.throwclasses.Transfers.NotEnoughMoneyAtBalanceException;
 import uz.pdp.online.onlinepayment.common.exceptions.throwclasses.plasticcard.PlasticCardNotFoundException;
 import uz.pdp.online.onlinepayment.dto.transfer.TransferReqWithoutConfirmationDto;
 import uz.pdp.online.onlinepayment.entity.inpostgres.PlasticCard;
@@ -16,6 +17,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TransferService {
 
+    private final CentralBankServices centralBankServices;
     private final PlasticCardService plasticCardService;
 
     public void transaction(TransferReqWithoutConfirmationDto transferReqWithoutConfirmationDto) {
@@ -30,12 +32,23 @@ public class TransferService {
 
         plasticCardIsBelongsToCurrentlyUser(transferReqWithoutConfirmationDto.getFrom(), plasticCard);
 
-        openAndTransaction(plasticCard, transferReqWithoutConfirmationDto.getTo(), transferReqWithoutConfirmationDto.getAmount());
+        openTransactionAndTransfer(plasticCard, transferReqWithoutConfirmationDto.getTo(), transferReqWithoutConfirmationDto.getAmount());
 
     }
 
-    private void openAndTransaction(PlasticCard from, String to, BigDecimal amount) {
+    private void openTransactionAndTransfer(PlasticCard fromPlasticCard, String to, BigDecimal amount) {
 
+        BigDecimal fee = BigDecimal.valueOf(0.25);
+
+        BigDecimal feeAmount = amount.multiply(fee);
+
+        BigDecimal totalAmount = amount.add(feeAmount);
+
+        if (fromPlasticCard.getBalance().compareTo(amount)<0) {
+            throw new NotEnoughMoneyAtBalanceException();
+        }
+
+        centralBankServices.transferMoney(fromPlasticCard,to, totalAmount);
 
     }
 

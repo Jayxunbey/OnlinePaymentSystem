@@ -9,5 +9,6 @@
     <include file="db/liquabases/postgres/entities/changingdatatype/19-01-changelog.xml"/>
     <include file="db/liquabases/postgres/entities/addingColumn/19-01-changelog.xml"/>
     <include file="db/liquabases/postgres/entities/addingColumn/addingRoleColumnToUser.xml"/>
+    <include file="db/liquabases/postgres/entities/changingdatatype/07-01-changelog.xml"/>
 
 </databaseChangeLog>
