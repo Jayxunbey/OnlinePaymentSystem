@@ -201,6 +201,7 @@ public class ServicesController {
         List<ServiceRespForAllDto> allByCategoryNumber = servicesService.getAllByCategoryNumberAndActiveTrue(number);
 
         return ResponseEntity.ok().body(allByCategoryNumber);
+
     }
 
     @Operation(

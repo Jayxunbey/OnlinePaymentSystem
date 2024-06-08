@@ -1,5 +1,7 @@
 package uz.pdp.online.onlinepayment.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import uz.pdp.online.onlinepayment.common.exceptions.throwclasses.Transfers.FailedTransactionException;
 import uz.pdp.online.onlinepayment.common.exceptions.throwclasses.plasticcard.PlasticCardNotFoundException;
@@ -9,13 +11,12 @@ import uz.pdp.online.onlinepayment.entity.inpostgres.PlasticCard;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class CentralBankServices {
 
+    private static final Logger log = LoggerFactory.getLogger(CentralBankServices.class);
     Map<String, PlasticCardDetailsDto> plasticCardDetailsDtoMap = new HashMap<>();
 
     {
@@ -68,15 +69,22 @@ public class CentralBankServices {
 
     }
 
-    public void transferMoney(PlasticCard fromPlasticCard, String to, BigDecimal totalAmount) {
+    public boolean transferMoney(PlasticCard fromPlasticCard, PlasticCardDetailsDto to, BigDecimal amount, BigDecimal feeAmount) {
 
-        if (!sendMoneyTo(to, totalAmount)) {
-            throw new FailedTransactionException(to);
+        if (to==null) {
+            throw new PlasticCardNotFoundException();
         }
 
-        if (!withdrawMoneyFromAccountOfCurrentlyUser(fromPlasticCard,totalAmount)) {
-            throw new FailedTransactionException(to);
+        if (!sendMoneyTo(to.getNumber(), amount)) {
+            throw new FailedTransactionException(to.getNumber());
         }
+
+        if (!withdrawMoneyFromAccountOfCurrentlyUser(fromPlasticCard,amount.add(feeAmount))) {
+            throw new FailedTransactionException(to.getNumber());
+        }
+
+
+        return true;
 
     }
 
@@ -86,8 +94,12 @@ public class CentralBankServices {
             throw new PlasticCardNotFoundException();
         }
 
-        BigDecimal subtractedBalance = plasticCardDetailsDto.getBalance().subtract(totalAmount);
+        BigDecimal balance = plasticCardDetailsDto.getBalance();
+        BigDecimal subtractedBalance = balance.subtract(totalAmount);
 
+//        log.info("Total diviser balance: " + totalAmount);
+//        log.info("Old Balance: " + balance);
+//        log.info("SubtractedBalance = " + subtractedBalance);
         plasticCardDetailsDto.setBalance(subtractedBalance);
 
         plasticCardDetailsDtoMap.put(fromPlasticCard.getNumber(), plasticCardDetailsDto);
@@ -108,5 +120,23 @@ public class CentralBankServices {
         plasticCardDetailsDtoMap.put(to, remotePlasticCard);
         return true;
 
+    }
+
+    public List<PlasticCardDetailsDto> getPlasticCardsWithPhone(String phoneNumber) {
+        List<PlasticCardDetailsDto> plasticCardDetailsDtos = new ArrayList<>();
+
+        plasticCardDetailsDtoMap.forEach((s, plasticCardDetailsDto) -> {
+            if (plasticCardDetailsDto.getPhoneNumber().equals(phoneNumber)) {
+                plasticCardDetailsDtos.add(plasticCardDetailsDto);
+            }
+        });
+        return plasticCardDetailsDtos;
+    }
+
+    public PlasticCardDetailsDto getPlasticCardWithNumber(String to) {
+        if (plasticCardDetailsDtoMap.containsKey(to)) {
+            return plasticCardDetailsDtoMap.get(to);
+        }
+        return null;
     }
 }
