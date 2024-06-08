@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 import uz.pdp.online.onlinepayment.dto.transfer.TransferReqWithoutConfirmationDto;
 import uz.pdp.online.onlinepayment.service.TransferService;
 
+import javax.security.auth.login.AccountNotFoundException;
+
 @RestController
 @RequestMapping("/api/transfer")
 @RequiredArgsConstructor
@@ -18,7 +20,7 @@ public class TransfersController {
     private final TransferService transferService;
 
     @PostMapping("/transaction-via-without-confirmation")
-    public void transaction(@RequestBody @Valid TransferReqWithoutConfirmationDto transferReqWithoutConfirmationDto){
+    public void transaction(@RequestBody @Valid TransferReqWithoutConfirmationDto transferReqWithoutConfirmationDto) throws AccountNotFoundException {
 
         transferService.transaction(transferReqWithoutConfirmationDto);
 
@@ -27,7 +29,7 @@ public class TransfersController {
     }
 
     @PostMapping("/transaction-via-phone-confirmation")
-    public void transactionWithConfirmation(@RequestBody @Valid TransferReqWithoutConfirmationDto transferReqWithoutConfirmationDto){
+    public void transactionWithConfirmation(@RequestBody @Valid TransferReqWithoutConfirmationDto transferReqWithoutConfirmationDto) throws AccountNotFoundException {
 
         transferService.transaction(transferReqWithoutConfirmationDto);
 

@@ -1,6 +1,8 @@
 package uz.pdp.online.onlinepayment.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +26,7 @@ import java.util.*;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class PlasticCardService {
 
     private final CommonServices commonServices;
@@ -111,6 +114,8 @@ public class PlasticCardService {
 
         String phone = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
+        updatePlasticCardDataBaseVia(phone);
+
         List<PlasticCard> plasticCards = plasticCardRepository.findByPhoneNumberAndActiveTrue(phone);
 
         plasticCards.forEach(eachPlasticCard -> {
@@ -119,6 +124,25 @@ public class PlasticCardService {
 
         return plasticCardResponseDtos;
 
+    }
+
+    @Async
+    protected void updatePlasticCardDataBaseVia(String phone) {
+        log.info("Async started");
+
+        List<PlasticCardDetailsDto> plasticCardsWithPhone = centralBankServices.getPlasticCardsWithPhone(phone);
+        plasticCardsWithPhone.forEach(this::updateBalanceWithPlasticNumber);
+
+        log.info("Async ended");
+    }
+
+    private void updateBalanceWithPlasticNumber(PlasticCardDetailsDto plasticCardDetailsDto) {
+        Optional<PlasticCard> byNumber = plasticCardRepository.findByNumber(plasticCardDetailsDto.getNumber());
+        if (byNumber.isPresent()) {
+            PlasticCard plasticCard = byNumber.get();
+            plasticCard.setBalance(plasticCardDetailsDto.getBalance());
+            plasticCardRepository.save(plasticCard);
+        }
     }
 
     public void deleteCard(String number) {

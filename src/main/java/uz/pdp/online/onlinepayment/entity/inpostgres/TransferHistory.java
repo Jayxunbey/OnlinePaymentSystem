@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -29,10 +31,10 @@ public class TransferHistory {
     private String recipientCard;
 
     @Column(name = "amount", nullable = false)
-    private Double amount;
+    private BigDecimal amount;
 
     @Column(name = "fee", nullable = false)
-    private Double fee;
+    private BigDecimal fee;
 
     @Column(name = "sender_full_name", nullable = false)
     private String senderFullName;
@@ -41,9 +43,9 @@ public class TransferHistory {
     private String recipientFullName;
 
     @Column(name = "created_date", nullable = false)
-    private LocalDate createdDate;
+    private Date createdDate;
 
     @Column(name = "payment_date", nullable = false)
-    private LocalDate paymentDate;
+    private Date paymentDate;
 
 }

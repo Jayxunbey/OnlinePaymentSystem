@@ -109,6 +109,7 @@ public class PlasticCardController {
     @Secured("ROLE_USER")
     public ResponseEntity<List<PlasticCardResponseDto>> allPlasticCard() {
 
+
         List<PlasticCardResponseDto> allPlasticCard = plasticCardService.getAllPlasticCardForResp();
 
         return ResponseEntity.ok(allPlasticCard);
